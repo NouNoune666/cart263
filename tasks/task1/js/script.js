@@ -11,19 +11,19 @@ function draw() {
     //Q1
     // push();
     // noStroke();
-    // fill('pink');
+    // fill(128, 0, 128);
     // ellipse(10, 20, 10)
     // pop();
 
     // push();
     // noStroke();
-    // fill('purple');
+    // fill(255, 0, 255);
     // ellipse(30, 40, 20)
     // pop();
 
     // push();
     // noStroke();
-    // fill('teal');
+    // fill(75, 0, 130);
     // ellipse(60, 70, 30)
     // pop();
 
