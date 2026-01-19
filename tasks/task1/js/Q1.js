@@ -11,7 +11,9 @@ function setup() {
     console.log("go")
     createCanvas(300, 300);
 
+}
 
+function draw() {
     background(0);
     push();
     fill(ellipseFillR, ellipseFillG, ellipseFillB);
@@ -25,8 +27,4 @@ function setup() {
     fill(ellipseFillR + 50, ellipseFillG, ellipseFillB + 50);
     ellipse(ellipseX + 50, ellipseY + 30, ellipseW + 20);
     pop();
-
-}
-
-function draw() {
 } 
