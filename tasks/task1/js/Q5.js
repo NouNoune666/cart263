@@ -1,112 +1,76 @@
-// ??????????
-
 "use strict";
+// QU 5.0
+let counter = 0;
 
-let counter = 1;
-let checkcheck;
-
-//starting radius
-
-// let radius = 40;
-// let ellipseAlpha = 200;
-// let circle = {
-//     stroke: 'gray',
-// }
-
+// orange square
 let square = {
     w: 20,
     h: 20,
     x: 20,
-    y: 20,
-    fill: 'orangeRed',
-}
+    y: 30,
+    colour: {
+        r: 255,
+        g: 100,
+        b: 0
+    }
+};
 
 function setup() {
+    console.log("go")
     createCanvas(300, 300);
 }
 
 function draw() {
     background(0);
+
+    checkSquareOverlap(mouseX, mouseY, square);
+
     displaySquare();
-    checkCollisionWithSquare();
-    // displayEllipse();
 
-    //ellipse
-    let radius = 40;
-    let x = 150;
-    let y = 150;
-    let alpha = 200;
+    let i = 0;
+    let radius = 20;
+    let ellipseAlpha = 100;
 
-    push();
-    fill(255, 255, 255, alpha);
-    ellipse(x, y, radius);
-    pop();
-    alpha += -20;
-    radius += 20;
-    push();
-    fill(255, 255, 255, alpha);
-    ellipse(x, y, radius);
-    pop();
-    radius += 20;
-    alpha += -20
-    push();
-    fill(255, 255, 255, alpha);
-    ellipse(x, y, radius);
-    pop();
-    radius += 20;
-    alpha += -20
-    push();
-    fill(255, 255, 255, alpha);
-    ellipse(x, y, radius);
-    pop();
-    radius += 20;
-    alpha += -20
-    push();
-    fill(255, 255, 255, alpha);
-    ellipse(x, y, radius);
-    pop();
+    while (i < counter) {
+        if (counter > 0 && counter < 11) {
+            push();
+            fill(255, ellipseAlpha);
+            ellipse(width / 2, height / 2, radius);
+            pop();
+            ellipseAlpha += 5;
+            radius += 20;
+            i++;
+        }
+    }
 
 }
 
 function displaySquare() {
-    push();
     noStroke();
-    fill(square.fill);
-    rect(square.x, square.y, square.w);
+    push();
+    fill(square.colour.r, square.colour.g, square.colour.b);
+    rect(square.x, square.y, square.w, square.h);
     pop();
+
+    if (checkSquareOverlap(mouseX, mouseY, square)) {
+        square.colour.g = 180;
+        square.colour.b = 30;
+    }
+    else {
+        square.colour.g = 100;
+        square.colour.b = 0;
+    }
 }
 
-
-function checkCollisionWithSquare() {
-    // could i write this in a simpler way?
-
-    if (mouseX > 20 && mouseX < 40 && mouseY > 20 && mouseY < 40) {
-        checkcheck = true;
+function mousePressed() {
+    // Overlapping rectangle 1
+    if (checkSquareOverlap(mouseX, mouseY, square)) {
+        counter += 1;
+        console.log(counter)
     }
-    else (checkcheck = false)
-
-    if (checkcheck === true) {
-        square.fill = 'orange'
-    }
-    else (square.fill = 'orangeRed')
-
 }
 
-// why should i not call this function in draw?
-function mouseClicked() {
-    if (checkcheck === true) {
-        counter += 1
-    }
-    else (counter = counter)
-    // how to write ''do nothing''?
+function checkSquareOverlap(mouseX, mouseY, square) {
+    // Overlapping rectangle 1
+    return ((mouseX > square.x && mouseX < (square.x + square.w)) && (mouseY > square.y && mouseY < (square.y + square.h)));
 }
-
-// function displayEllipse() {
-//     push();
-//     fill(255, 255, 255, ellipseAlpha);
-//     strokeWeight(3);
-//     stroke(circle.stroke);
-//     ellipse(width / 2, height / 2, radius);
-//     pop();
-// }
-

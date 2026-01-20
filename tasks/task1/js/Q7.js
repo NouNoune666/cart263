@@ -2,15 +2,15 @@
 
 let state = "circle";
 
-let circleSize = 20;
+let circleSize = 50;
 let circleXstart = 0;
 let circleYstart = 0;
-let circleSpacing = 20;
+let circleSpacing = 50;
 
 let fillR;
 let fillG;
 let fillB;
-// possible to do colors in other system than RGB?
+// possible to do colors in other system than RGB? yes, you could use JSON for 'colors'
 
 let squareSize = 20;
 let squareXstart = -10;
@@ -61,3 +61,9 @@ function mouseClicked() {
         state = "circle"
     }
 }
+
+// mouseClicked could also be
+
+// function mousePressed() {
+//  isCircle = !isCircle
+// }

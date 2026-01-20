@@ -24,12 +24,11 @@ function draw() {
     text(textObject.string, textObject.x, textObject.y);
     pop();
 
-    // horizontal line, is there a difference if i put this inside the for loop
     let horizontalY = 30;
     let horizontalStartX = 30;
     let horizontalSpacing = 10;
 
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < 10; i++) {
         push();
         fill(textObject.fill);
         stroke(textObject.size);
@@ -42,7 +41,7 @@ function draw() {
     let verticalStartY = 30;
     let verticalSpacing = 15;
 
-    for (let i = 0; i < 16; i++) {
+    for (let i = 15; i > 0; i--) {
         push();
         fill(textObject.fill);
         stroke(textObject.size);
