@@ -29,7 +29,7 @@ function draw() {
     let horizontalStartX = 30;
     let horizontalSpacing = 10;
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 9; i++) {
         push();
         fill(textObject.fill);
         stroke(textObject.size);
@@ -49,4 +49,6 @@ function draw() {
         text(i, verticalX, verticalStartY + verticalSpacing * i);
         pop();
     }
-}   
+}
+
+// bonus??
