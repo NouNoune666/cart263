@@ -38,7 +38,7 @@ function setup() {
 
 
     /*************************************** */
-    /* 4: the last image element inside the element that has the class img-container */
+    /* 4: the last image element inside the element that has the class img-container DID NOT UNDERSTAND THIS ONE*/
     /***CODE */
     console.log(document.querySelectorAll(".img-container"));
     console.log(document.querySelectorAll(".img-container").length);
@@ -86,29 +86,36 @@ function setup() {
     /*************************************** */
     /* 1: Select the first paragraph and replace the text within the paragraph... */
     /***CODE */
+    console.log(document.getElementById("1").innerHTML = " <h1> Amélie Barrette </h1> <h2> January 26th 2026 </h2>");
     /*************************************** */
     /* 2: Select all elements in the HTML that have the class name content-container
      and change the background color ... of first and second ...*/
     /***CODE */
+    console.log(document.getElementsByClassName("content-container")[0].style.background = "orange");
+    console.log(document.getElementsByClassName("content-container")[1].style.background = "purple");
 
     /*************************************** */
     /* 3: Change the src element of the first image element on the page to be ...
     /***CODE */
+    console.log(document.getElementsByTagName("img")[0].src = "task-2-images/seven.png");
 
     /*************************************** */
-    /* 4: Select the third paragraph element on the page and 
+    /* 4: Select the third paragraph element on the page and
     replace the content (within the paragraph) to be an h2 element which contains the text `TEST 123`
     /***CODE */
+    console.log(document.querySelectorAll('p')[2].innerHTML = "TEST 123");
 
     /*************************************** */
     /* 5: Select the fourth paragraph element on the page and 
     add to the existing content an h2 element containing the text `TEST 123`
     /***CODE */
-
+    console.log(document.querySelectorAll('p')[3].innerHTML = "TEST 123");
     /*************************************** */
-    /* 6: Select the fifth paragraph element on the page and add to the existing content 
+    /* 6: Select the fifth paragraph element on the page and add to the existing content
     an img element that holds `one.png`, and add the class newStyle to said paragraph element.
     /***CODE */
+    console.log(document.querySelectorAll('p')[4]);
+    // ?????
 
 
     /*************************************** */
