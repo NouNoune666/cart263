@@ -3,7 +3,7 @@
 - in vanilla javascript the library is IN the browser
 
 - Elements (ex: head, body, etc.)
-- propreties (ex: for image (src), for p (div or id) )
+- propreties/attributes (ex: for image (src), for p (div or id) )
 
 - window.onload = setup the function 'setup' will run when the window has loaded
 
