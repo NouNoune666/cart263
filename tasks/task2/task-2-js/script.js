@@ -117,8 +117,8 @@ function setup() {
     //     /* 6: Select the fifth paragraph element on the page and add to the existing content
     //     an img element that holds `one.png`, and add the class newStyle to said paragraph element.
     //     /***CODE */
-    //     document.querySelectorAll('p')[4].innerHTML += "<img src ='task-2-images/one.png' class='newStyle'></img>";
-    //     // ?????
+    // document.querySelectorAll('p')[4].innerHTML += "<img src ='task-2-images/one.png' class='newStyle'></img>";
+    //     
 
 
     //     /*************************************** */
@@ -168,12 +168,19 @@ function setup() {
         customCreateElement(pTag)
     }
 
-
-
+    console.log(document.querySelectorAll('p')[1]);
+    console.log(document.querySelectorAll('p')[3]);
+    console.log(document.querySelectorAll('p')[5]);
+    console.log(document.querySelectorAll('p')[7]);
+    console.log(document.querySelectorAll('p')[9]);
+    console.log(document.querySelectorAll('p')[11]);
+    console.log(document.querySelectorAll('p')[13]);
+    console.log(document.querySelectorAll('p')[15]);
+    console.log(document.querySelectorAll('p')[17]);
 
     /***EXPLANATION::
      * 
-     * 
+     * see screenshot1.png in task-2-images/task-2-screenshots
      */
 
     /*************************************** */
