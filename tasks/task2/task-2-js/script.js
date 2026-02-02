@@ -183,16 +183,18 @@ function setup() {
      * see screenshot1.png in task-2-images/task-2-screenshots
      */
 
+
+
     /*************************************** */
     /* 2: GRID OF BOXES */
     /* 2A: Create another new function: function customNewBoxCreate(parent){ //body }*/
-    /* 2B: In the body of customNewBoxCreate create a new div element, that has the class testDiv. 
+    /* 2B: In the body of customNewBoxCreate create a new div element, that has the class testDiv.
     /* 2C:Then append this new element to the parent variable within the function. 
     /* 2D:Finally, return</code> this new element */
-    /* 2E:Create a nested for loop (for rows and columns) to iterate through 10 columns and 10 rows (just like the JS Review :)). 
+    /* 2E:Create a nested for loop (for rows and columns) to iterate through 10 columns and 10 rows (just like the JS Review :)).
         Call the customNewBoxCreate function, in order to generate a new div -> representing each cell in the grid. 
         Ensure that the parent element for each of these new divs is the element whose id is named `new-grid`*/
-    /* 2F: You will see at this point that the x,y position of the resulting divs makes no sense... 
+    /* 2F: You will see at this point that the x,y position of the resulting divs makes no sense...
         Fix this by doing the following: every time you call customNewBoxCreate() - save the current returned element 
         in a variable i.e. returnedDiv. 
         Set the style (left and top) to the of this element to 
@@ -205,9 +207,51 @@ function setup() {
 
     /***CODE */
 
+    //2G
+    let color = "purple"; // 
+    let text = "ODD"; // 
+
+    //2E
+    for (let r = 0; r < 10; r++) {
+        let verticalAlignment = r * 40 + "px";
+
+        for (let c = 0; c < 10; c++) {
+            //2F
+            let returnedDiv = customNewBoxCreate(document.querySelector("#new-grid"));
+            returnedDiv.style.left = c * 40 + "px";
+            returnedDiv.style.top = verticalAlignment;
+            //2G
+            returnedDiv.style.background = color;
+            //2H
+            returnedDiv.textContent = text;
+        }
+
+        if (color === "purple") {
+            color = "white";
+            text = "EVEN";
+        }
+        else if (color === "white") {
+            color = "purple";
+            text = "ODD";
+        }
+    }
+
+    //2A
+    function customNewBoxCreate(parent) {
+        //2B
+        let newBox = document.createElement("div");
+        newBox.classList.add("testDiv");
+        //2C
+        parent.appendChild(newBox);
+        //2D
+        return (newBox);
+    }
+
+    console.log(document.querySelectorAll(".testDiv"));
 
     /***EXPLANATION::
-     * 
+     * screenshot before: see testDivBefore.png in task-2-images/task-2-screenshots
+     * screenshot after: see testDivAfter.png in task-2-images/task-2-screenshots
      * 
      */
 
