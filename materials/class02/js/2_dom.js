@@ -1,7 +1,11 @@
 
 window.onload = setup
 
+
 function setup() {
+    // document.querySelector(".square_shape").classList.remove("square_shape");
+    // document.querySelector("p span").classList.add("change_span");
+    // document.getElementById("one").style.background = "pink";
     // console.log("running setup");
     // //Accessing by ID
     // console.log(document.getElementById("one"));
@@ -100,16 +104,16 @@ function setup() {
     newDivTwo.classList.add("square_shape");
     newDivTwo.innerHTML = " NEW ELEMENT TWO ";
     newDivTwo.style.backgroundColor = "yellow";
-    newDivTwo.querySelector("p").style.color = "black"
+    newDivTwo.style.color = "black"
     // access parent element
     let sibling = document.querySelector("#three")
     let parentElementAgain = document.querySelector(".wrapper_flex_box")
     parentElementAgain.insertBefore(newDivTwo, sibling);
 
-    //Removing elements from the DOM
-    let parentElementToRemoveFrom = document.querySelector(".wrapper_flexbox")
-    let toRemove = document.getElementById("six");
-    parentElementToRemoveFrom.removeChild(toRemove);
+    // //Removing elements from the DOM
+    // let parentElementToRemoveFrom = document.querySelector(".wrapper_flexbox")
+    // let toRemove = document.getElementById("six");
+    // parentElementToRemoveFrom.removeChild(toRemove);
 
 
 

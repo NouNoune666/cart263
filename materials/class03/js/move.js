@@ -2,23 +2,25 @@
 window.onload = function () {
     // console.log("move");
 
-    let box = document.querySelector('#draw-box-a');
-    box.addEventListener("mousemove", drawBoxCallBack);
+    // we want to do something when the mouse is over the box :)
+    let drawBox = document.querySelector("#draw-box-a");
+    console.log(drawBox);
 
-    let particle = document.createElement("div");
-    particle.classList.add("point");
-    box.appendChild(particle);
+    // A - add event listener and callback
+    drawBox.addEventListener("mousemove", function (e) {
+        console.log("mouse move");
+        // B - these are the same
+        console.log(this);
+        console.log(e.target);
 
-    function drawBoxCallBack(e) {
-        // console.log("moving");
-        // console.log(this)
-        // console.log(e);
-        console.log(this.getBoundingClientRect());
-        let offsetX = e.clientX - this.getBoundingClientRect().x;
-        let offsetY = e.clientY - this.getBoundingClientRect().y;
+        // C - get the mouse coords relative to the WINDOW
+        // drawBox.innerHTML = `x: ${e.clientX}, y:${e.clientY}`;
+        let rect = this.getBoundingClientRect();
+        console.log(rect);
+        //DIFFERENCE TO ENSURE COORDS ARE RELATIVE
+        let offsetX = e.clientX - rect.x;
+        let offsetY = e.clientY - rect.y;
+        drawBox.innerHTML = `offset_x: ${offsetX}, offset_y:${offsetY}`;
+    });
 
-        particle.style.left = offsetX + "px";
-        particle.style.top = offsetY + "px";
-        // this.innerHTML = `x:${offsetX} y:${offsetY}`;
-    }
 }

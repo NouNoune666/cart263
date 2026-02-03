@@ -1,26 +1,47 @@
 
 window.onload = function () {
-    console.log("keys");
 
     let speedX = 5;
-    let boxA = document.querySelector("#boxA");
 
-    window.addEventListener("keydown",
-        function (e) {
-            if (e.key === "ArrowRight") {
-                let currentPos = parseInt(boxA.style.left)
-                boxA.style.left = currentPos + speedX + "px"
+    window.addEventListener("keydown", function (e) {
+        // console.log(e.key);
+        // document.querySelector("#textContainer").textContent += `${e.key}`;
+        // document.querySelector("#textContainer").textContent += `${e.code}`;
+
+        if (e.key === "ArrowRight") {
+            document.getElementById("boxA").style.left =
+                parseInt(document.getElementById("boxA").style.left) + speedX + "px";
+
+        } else if (e.key === "ArrowLeft") {
+            document.getElementById("boxA").style.left =
+                parseInt(document.getElementById("boxA").style.left) - speedX + "px";
+        }
+        else if (e.code === "Space") {
+            let bool = document.getElementById("boxB").getAttribute("custom-bool");
+            if (bool === "off") {
+                document.getElementById("boxB").style.background = "orange";
+                document.getElementById("boxB").setAttribute("custom-bool", "on");
+            } else {
+                document.getElementById("boxB").style.background = "rgb(112, 184, 226)";
+                document.getElementById("boxB").setAttribute("custom-bool", "off");
             }
+        }
 
-            if (e.key === "ArrowLeft") {
-                let currentPos = parseInt(boxA.style.left)
-                boxA.style.left = currentPos - speedX + "px"
-            }
+        else if (e.key === "Shift") {
+            document.getElementById("boxA").style.background = "rgb(226, 112, 177)";
+        }
+    });
+    window.addEventListener("keyup", function (e) {
+        console.log("keyup");
+        //2: change color when space is down
 
+        if (e.key === "Shift") {
+            document.getElementById("boxA").style.background = "rgb(112, 184, 226)";
+        }
+        else {
+            console.log(`key up not shift:`);
+            console.log(e);
+        }
+    });
 
-            // body of callback function
-            // console.log(e.key);
-            // console.log(e.code);
-            // console.log(e);
-        });
 }

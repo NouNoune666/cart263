@@ -1,65 +1,60 @@
-window.onload = setup;
-function setup() {
-    // let introBoolean = "inactive"
-    // let s1Boolean = "inactive"
+window.onload = go;
 
-    // console.log("events!")
+function go() {
 
-    // let introSection = document.getElementById("intro");
-    // introSection.addEventListener("click", mouseIntroHandler);
-
-    let allSections = document.querySelectorAll(".mouseclick-active-section")
+    let allSections = document.querySelectorAll(".mouseclick-active-section");
+    //go through each section and apply the event listener
     for (let element of allSections) {
-        element.addEventListener("click", changeOpacityOfSection)
+        // console.log(element)
+        //add click to each element
+        element.addEventListener("click", function (e) {
+            // console.log(this);
+
+            //check if is inactive
+            if (this.getAttribute("custom-bool") === "inactive") {
+                console.log("is inactive");
+                // console.log(this.id)
+
+                // :: new access the class of parent (this)
+                let class_to_add = `${this.id}-section-active`;
+                this.classList.add(class_to_add)
+                // :: new access the class of child 
+                let class_to_add_p = `${this.id}-section-p-active`;
+                document.querySelector(`#${this.id} p`).classList.add(class_to_add_p)
+                this.setAttribute("custom-bool", "active")
+            }
+            else {
+                console.log("is now active");
+                this.setAttribute("custom-bool", "inactive");
+                let class_to_remove = `${this.id}-section-active`;
+                this.classList.remove(class_to_remove);
+                // :: new access the class of child
+                let class_to_remove_p = `${this.id}-section-p-active`;
+                document.querySelector(`#${this.id} p`).classList.remove(class_to_remove_p);
+            }
+        });
     }
 
-    function changeOpacityOfSection(e) {
-        console.log(this);
-        if (this.getAttribute("custom-bool") === "inactive") {
 
-            let classToAdd = `${this.id}-section-active`;
-            let classToAddP = `${this.id}-section-p-active`;
-            this.classList.add(classToAdd);
-            document.querySelector(`#${this.id} p`).classList.add(classToAddP)
 
-            this.setAttribute("custom-bool", "active")
-            console.log(this);
-        }
-        else {
-            let classToAdd = `${this.id}-section-active`;
-            let classToAddP = `${this.id}-section-p-active`;
-            this.classList.remove(classToAdd);
-            document.querySelector(`#${this.id} p`).classList.remove(classToAddP)
+    document.querySelector("#bubbleButton").addEventListener("click", function (e) {
+        console.log("button clicked");
 
-            this.setAttribute("custom-bool", "inactive")
-            console.log(this);
-        }
-    }
+        //<< CREATE A NEW ELEMENT ON THE FLY >>>
+        //this could be its own custom function ... 
+        let bubble = document.createElement("div");
+        bubble.classList.add("bubble");
+        bubble.style.left = `${Math.random() * (window.innerWidth - 200)}px`;
+        bubble.style.top = `${Math.random() * (window.innerHeight - 200)}px`;
 
-}
+        let r = Math.ceil(Math.random() * 255); //new Math.ceil
+        let g = Math.ceil(Math.random() * 255);
+        let b = Math.ceil(Math.random() * 255);
 
-function mouseIntroHandler(e) {
-    console.log("hello");
-    // console.log(e); // why the (e)
-    // console.log(this);
-    this.classList.add("intro-section-active");
-    // this.style.background = "rgba(214,110,239,0.5)";
-    // console.log(document.querySelector(`#${this.id} p`).style.background = 'pink');
-    // `#${this.id} p`
-    // this.style.setProperty("opacity", ".5");
-    //document.querySelector(`#${this.id} p`).style.setProperty("opacity", ".75")
-    document.querySelector(`#${this.id} p`).classList.add("intro-section-p-active")
+        bubble.style.background = `rgba(${r},${g},${b})`;
+        document.getElementById("top-layer").appendChild(bubble)
+        console.log(e)
 
+    })
 
 }
-
-// let introSection = document.querySelector("#intro");
-// introSection.addEventListener("click", function (e) {
-//     console.log(this);
-//     console.log(e)
-
-//     //a:
-//     this.style.background = `rgba(214, 110, 239, 0.5)`
-// });
-
-
