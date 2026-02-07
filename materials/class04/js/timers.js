@@ -3,44 +3,109 @@
  */
 window.onload = function () {
 
-    //create a particle div
-    let particleDiv = document.createElement("div");
-    particleDiv.id = "particle";
-    document.querySelector("#parent").appendChild(particleDiv);
-    particleDiv.style.left = "25px";
-    particleDiv.style.top = "25px";
+    // Store the animation frame ID so we can cancel it later
+    let aniRef = null;
 
+    // Create a second particle div element
+    let p2 = document.createElement("div");
 
-    let speedX = 2;
-    let speedY = 3;
-    window.requestAnimationFrame(animate);
+    // Give it a unique ID
+    p2.id = "particle_two";
 
-    function animate() {
-        let p = document.getElementById("particle");
-        p.style.left = parseInt(p.style.left) + speedX + "px";
-        p.style.top = parseInt(p.style.top) + speedY + "px";
-        window.requestAnimationFrame(animate);
-        checkBounds(document.getElementById("parent"), p);
+    // Add it to the parent container
+    document.getElementById("parent").appendChild(p2);
 
+    // Set its starting position: 500px from left, 100px from top
+    p2.style.left = '500px'
+    p2.style.top = '100px';
+
+    // Theta is the angle that increases over time (used in Math.sin())
+    let theta = 0;
+
+    // Start the animation and store the frame ID in aniRef
+    aniRef = window.requestAnimationFrame(modifyParticle);
+
+    function modifyParticle() {
+        // Get the second particle element
+        let p2 = document.getElementById("particle_two");
+
+        // Math.sin(theta) oscillates between -1 and 1
+        // Map that range (-1 to 1) to a size range (5 to 100 pixels)
+        let mappedNum = mapNumRange(Math.sin(theta), -1, 1, 5, 100);
+
+        // Apply the mapped value to width (particle grows and shrinks)
+        p2.style.width = (mappedNum) + "px";
+
+        // Apply the mapped value to height (particle grows and shrinks)
+        p2.style.height = (mappedNum) + "px";
+
+        // Apply the mapped value to border-radius (makes it more/less circular)
+        p2.style.borderRadius = (mappedNum) + "px";
+
+        // Increment theta by small amount to continue the oscillation
+        theta += 0.05;
+
+        // Continue the animation loop and update aniRef with new frame ID
+        aniRef = window.requestAnimationFrame(modifyParticle);
     }
 
-    function checkBounds(parent, p) {
-        let bounds = parent.getBoundingClientRect();
+    // Custom mapping function - converts a number from one range to another
+    // Same as map() function in p5.js
+    // Example: converts Math.sin() output (-1 to 1) to pixel sizes (5 to 100)
+    const mapNumRange = (num, inMin, inMax, outMin, outMax) =>
+        ((num - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
 
-        if (parseInt(p.style.left) > bounds.right) {
-            speedX *= -1;
 
-        } else if (parseInt(p.style.left) < bounds.left) {
-            speedX *= -1;
+    // Listen for keyboard events
+    window.addEventListener("keydown", function (e) {
+        // Check if the spacebar was pressed
+        if (e.code === 'Space') {
+            console.log("space");
+
+            // STOP the animation by canceling the frame request using the stored ID
+            // This prevents modifyParticle() from being called again
+            this.cancelAnimationFrame(aniRef);
         }
+    })
 
-        if (parseInt(p.style.top) > bounds.bottom) {
-            speedY *= -1;
+    // //create a particle div
+    // let particleDiv = document.createElement("div");
+    // particleDiv.id = "particle";
+    // document.querySelector("#parent").appendChild(particleDiv);
+    // particleDiv.style.left = "25px";
+    // particleDiv.style.top = "25px";
 
-        } else if (parseInt(p.style.top) < bounds.top) {
-            speedY *= -1;
-        }
-    }
+
+    // let speedX = 2;
+    // let speedY = 3;
+    // window.requestAnimationFrame(animate);
+
+    // function animate() {
+    //     let p = document.getElementById("particle");
+    //     p.style.left = parseInt(p.style.left) + speedX + "px";
+    //     p.style.top = parseInt(p.style.top) + speedY + "px";
+    //     window.requestAnimationFrame(animate);
+    //     checkBounds(document.getElementById("parent"), p);
+
+    // }
+
+    // function checkBounds(parent, p) {
+    //     let bounds = parent.getBoundingClientRect();
+
+    //     if (parseInt(p.style.left) > bounds.right) {
+    //         speedX *= -1;
+
+    //     } else if (parseInt(p.style.left) < bounds.left) {
+    //         speedX *= -1;
+    //     }
+
+    //     if (parseInt(p.style.top) > bounds.bottom) {
+    //         speedY *= -1;
+
+    //     } else if (parseInt(p.style.top) < bounds.top) {
+    //         speedY *= -1;
+    //     }
+    // }
 
     // let randomChanceToRun = setTimeout(oneTimeText, 500);
 
