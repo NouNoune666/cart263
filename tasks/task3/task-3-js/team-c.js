@@ -103,13 +103,30 @@ function setup_C() {
 
     //gradient colours
     let gradiantColours = [
-      "rgb(9, 70, 30)",
-      "rgb(10, 85, 36)",
-      "rgb(14, 100, 44)",
-      "rgb(15, 114, 50)",
-      "rgb(18, 141, 61)",
-
-
+      "rgb(9, 40, 20)",
+      "rgb(9, 50, 20)",
+      "rgb(9, 60, 20)",
+      "rgb(9, 70, 20)",
+      "rgb(9, 80, 20)",
+      "rgb(9, 90, 20)",
+      "rgb(9, 100, 20)",
+      "rgb(9, 100, 40)",
+      "rgb(9, 100, 60)",
+      "rgb(9, 100, 80)",
+      "rgb(9, 100, 100)",
+      "rgb(9, 100, 120)",
+      "rgb(9, 100, 140)",
+      "rgb(29, 100, 140)",
+      "rgb(49, 100, 140)",
+      "rgb(69, 100, 140)",
+      "rgb(89, 100, 140)",
+      "rgb(109, 100, 140)",
+      "rgb(129, 100, 140)",
+      "rgb(149, 100, 140)",
+      "rgb(169, 100, 140)",
+      "rgb(189, 100, 140)",
+      "rgb(209, 100, 140)",
+      "rgb(229, 100, 140)",
     ];
 
     let circles = [];
@@ -118,15 +135,15 @@ function setup_C() {
     // let lastHovered = undefined;
 
     //calls grid of circles
-    for (let i = 0; i < bounds.width / 15; i++) {
+    for (let i = 0; i < bounds.width / 30; i++) {
       circles.push([]); // create rows
-      for (let j = 0; j < bounds.height / 15; j++) {
+      for (let j = 0; j < bounds.height / 30; j++) {
         let circle = document.createElement("div");
         circle.classList.add("TEAM_C_grid");
-        circle.style.left = offset + i * 12.5 + "px";
-        circle.style.top = offset + j * 12.5 + "px";
-        circle.style.width = "9px";
-        circle.style.height = "9px";
+        circle.style.left = offset + i * 25 + "px";
+        circle.style.top = offset + j * 25 + "px";
+        circle.style.width = "18px";
+        circle.style.height = "18px";
         circle.style.opacity = 1;
         parentCanvas.appendChild(circle);
         circles[i].push(circle); // create columns
@@ -198,10 +215,16 @@ function setup_C() {
     // }
 
     function changeSize(i, j, delta) {
+
       let sizeAtt = parseInt(circles[i][j].style.width.replace("px", ""))
-      circles[i][j].style.width = `${sizeAtt + delta}px`;
-      circles[i][j].style.height = `${sizeAtt + delta}px`;
-      circles[i][j].style.borderRadius = `${sizeAtt + 10 + delta}px`;
+      let maxSize = 60;
+
+      if (sizeAtt < maxSize) {
+        circles[i][j].style.width = `${sizeAtt + delta}px`;
+        circles[i][j].style.height = `${sizeAtt + delta}px`;
+        circles[i][j].style.borderRadius = `${sizeAtt + 10 + delta}px`;
+      }
+
     }
   }
 
