@@ -202,11 +202,15 @@ function setup_C() {
 
     function changeGradient(i, j) {
       let gradientAtt = parseInt(circles[i][j].getAttribute("gradiantchange"));
+
       circles[i][j].setAttribute("gradiantchange", gradientAtt + 1);
       //help cycling through the gradiantColours infinitely
       circles[i][j].style.background = gradiantColours[Math.min(gradientAtt, gradiantColours.length - 1)];
+
       // circles[i][j].innerHTML = circles[i][j].getAttribute("gradiantchange")
       // console.log("gradiantchange", i, j)
+
+
     }
 
     // function resetGradient(i, j) {
