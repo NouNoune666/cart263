@@ -47,5 +47,5 @@ body {
     padding: 0;
     margin: 0;
     position: absolute;
-    background: brown;
+    border-style: solid;
 }

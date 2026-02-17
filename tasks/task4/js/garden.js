@@ -81,6 +81,11 @@ window.onload = function () {
       let x = Math.random() * window.innerWidth;
       let y = Math.random() * 100;
       let size = randomRange(10, 20);
+      let color = {
+        r: 190,
+        g: parseInt(randomRange(115, 145)),
+        b: parseInt(randomRange(25, 90)),
+      };
       let squirrel = new Squirrel(x, y, size, size, color);
       garden.squirrels.push(squirrel);
     }
@@ -92,6 +97,7 @@ window.onload = function () {
       let squirrel = garden.squirrels[i];
       console.log("squirrels")
       squirrel.renderSquirrel();
+      console.log(squirrel.color)
     }
   }
 
