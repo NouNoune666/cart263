@@ -4,6 +4,7 @@ window.onload = function () {
     /*squirrel object*/
     numSquirrels: 15,
     squirrels: [],
+    // Different images of the squirrel with different colors
     squirrelImages: [
       "images/squirrel.png",
       "images/squirrel2.png",
@@ -110,7 +111,6 @@ window.onload = function () {
       // Get the dog at index i from the array
       let squirrel = garden.squirrels[i];
       squirrel.move();
-      squirrel.wrap();
     }
     window.requestAnimationFrame(animateSquirrel);
   }

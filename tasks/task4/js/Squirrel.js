@@ -1,6 +1,5 @@
 class Squirrel {
 
-
     constructor(x, y, width, height, path) {
         this.x = x;
         this.y = y;
@@ -12,17 +11,16 @@ class Squirrel {
         this.vy = Math.random() * 2 + 1;
     }
 
-
     renderSquirrel() {
         this.squirrelBody.classList.add("squirrel");
         this.squirrelBody.style.width = this.width + "px";
         this.squirrelBody.style.height = this.height + "px";
         this.squirrelBody.style.left = this.x + "px";
         this.squirrelBody.style.top = this.y + "px";
-        // this.squirrelBody.style.background = `rgb(${this.color.r},${this.color.g},${this.color.b})`;
+        // this.squirrelBody.style.background = `rgb(${this.color.r},${this.color.g},${this.color.b})`; ---- commented out because not using color anymore
+
         //add to the DOM
         document.getElementsByClassName("grass")[0].appendChild(this.squirrelBody);
-        console.log(this.squirrelBody.src)
     }
 
     // Move the squirrel according to its velocity
@@ -44,31 +42,18 @@ class Squirrel {
 
         // Bounce off bottom edge
         if (this.y + this.width >= bottomOfGrass) {
-            this.vy *= -1; // flips to negative so the squirrel goes left now
+            this.vy *= -1; // flips to negative so the squirrel goes up now
             this.y += this.vy;
         }
 
         // Bounce off top edge of grass
-        if (this.y + this.width - 20 < 0) {
-            this.vy *= -1; // flips to negative so the squirrel goes left now
+        if (this.y + (this.width / 2) < 0) {
+            this.vy *= -1; // flips to negative so the squirrel goes down now
             this.y += this.vy;
         }
 
-        // console.log(this.squirrelBody.style.top)
-        // console.log(this.vx)
-
         this.squirrelBody.style.left = this.x + "px";
         this.squirrelBody.style.top = this.y + "px";
-
     }
-
-    // // Wrap the squirrel if it reaches the right edge
-    wrap() {
-        // if (this.x > window.innerWidth) {
-        //     this.x -= window.innerWidth;
-        // }
-    }
-
-
 
 }
