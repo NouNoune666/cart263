@@ -95,15 +95,25 @@ window.onload = function () {
     for (let i = 0; i < garden.squirrels.length; i++) {
       // Get the dog at index i from the array
       let squirrel = garden.squirrels[i];
-      console.log("squirrels")
       squirrel.renderSquirrel();
-      console.log(squirrel.color)
     }
+  }
+
+  function animateSquirrel() {
+    for (let i = 0; i < garden.squirrels.length; i++) {
+      // Get the dog at index i from the array
+      let squirrel = garden.squirrels[i];
+      squirrel.move();
+      squirrel.wrap();
+    }
+    window.requestAnimationFrame(animateSquirrel);
   }
 
   createSquirrels();
   createAndRenderTheGarden();
   renderSquirrels();
+  window.requestAnimationFrame(animateSquirrel);
+
 }
 
 function randomRange(min, max) {
