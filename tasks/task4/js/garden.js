@@ -122,7 +122,7 @@ window.onload = function () {
   function createTempNuts() {
     for (let i = 0; i < garden.numTempNuts; i++) {
       let x = Math.random() * window.innerWidth;
-      let y = Math.random() * 100;
+      let y = Math.random() * 600;
       let size = randomRange(40, 60);
       let tempNutColor = {
         r: parseInt(Math.random() * 255),
