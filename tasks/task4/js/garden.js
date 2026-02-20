@@ -2,8 +2,16 @@ window.onload = function () {
   // Our garden
   let garden = {
     /*squirrel object*/
-    numSquirrels: 5,
+    numSquirrels: 15,
     squirrels: [],
+    squirrelImages: [
+      "images/squirrel.png",
+      "images/squirrel2.png",
+      "images/squirrel3.png",
+      "images/squirrel4.png",
+      "images/squirrel5.png",
+      "images/squirrel6.png"
+    ],
 
     // An array to store the individual flowers
     flowers: [],
@@ -80,15 +88,13 @@ window.onload = function () {
     for (let i = 0; i < garden.numSquirrels; i++) {
       let x = Math.random() * window.innerWidth;
       let y = Math.random() * 100;
-      let size = randomRange(10, 20);
-      let color = {
-        r: 190,
-        g: parseInt(randomRange(115, 145)),
-        b: parseInt(randomRange(25, 90)),
-      };
-      let squirrel = new Squirrel(x, y, size, size, color);
+      let size = randomRange(40, 60);
+      let index = Math.floor(Math.random() * garden.squirrelImages.length)
+      let path = garden.squirrelImages[index]
+      let squirrel = new Squirrel(x, y, size, size, path);
       garden.squirrels.push(squirrel);
     }
+
   }
 
   function renderSquirrels() {
