@@ -14,6 +14,10 @@ window.onload = function () {
       "images/squirrel6.png"
     ],
 
+    /*Temporary nuts*/
+    numTempNuts: 30,
+    tempNuts: [],
+
     // An array to store the individual flowers
     flowers: [],
     // How many flowers in the garden
@@ -115,9 +119,34 @@ window.onload = function () {
     window.requestAnimationFrame(animateSquirrel);
   }
 
+  function createTempNuts() {
+    for (let i = 0; i < garden.numTempNuts; i++) {
+      let x = Math.random() * window.innerWidth;
+      let y = Math.random() * 100;
+      let size = randomRange(40, 60);
+      let tempNutColor = {
+        r: parseInt(Math.random() * 255),
+        g: parseInt(Math.random() * 255),
+        b: parseInt(Math.random() * 255),
+      };
+
+      let tempNut = new TempNut(x, y, size, tempNutColor);
+      garden.tempNuts.push(tempNut);
+    }
+  }
+
+  function renderTempNuts() {
+    for (let i = 0; i < garden.tempNuts.length; i++) {
+      let tempNuts = garden.tempNuts[i];
+      tempNuts.renderTempNut();
+    }
+  }
+
+  createTempNuts();
   createSquirrels();
   createAndRenderTheGarden();
   renderSquirrels();
+  renderTempNuts();
   window.requestAnimationFrame(animateSquirrel);
 
 }
