@@ -1,8 +1,17 @@
 window.onload = function () {
   // Our garden
   let garden = {
+
+    numNuts: 50,
+    nuts: [],
+    // Add more nut image paths here
+    nutImages: ["images/nut.png",
+      "images/nut1.png",
+      "images/nut2.png"
+    ],
+
     /*squirrel object*/
-    numSquirrels: 15,
+    numSquirrels: 5,
     squirrels: [],
     // Different images of the squirrel with different colors
     squirrelImages: [
@@ -13,10 +22,6 @@ window.onload = function () {
       "images/squirrel5.png",
       "images/squirrel6.png"
     ],
-
-    /*Temporary nuts*/
-    numTempNuts: 30,
-    tempNuts: [],
 
     // An array to store the individual flowers
     flowers: [],
@@ -86,79 +91,66 @@ window.onload = function () {
       // Add the flower to the array of flowers
       garden.flowers[i].renderFlower();
     }
-
   }
 
-  function createSquirrels() {
-    for (let i = 0; i < garden.numSquirrels; i++) {
+  function createNuts() {
+    // Create the correct number of dogs and put them in our array
+    for (let i = 0; i < garden.numNuts; i++) {
       let x = Math.random() * window.innerWidth;
       let y = Math.random() * 100;
-      let size = randomRange(40, 60);
+      let randomIndex = Math.floor(Math.random() * garden.nutImages.length);
+      let imageSrc = garden.nutImages[randomIndex];
+      let nut = new Nut(x, y, 15, 15, imageSrc);
+      garden.nuts.push(nut);
+
+    }
+
+  }
+  function renderNuts() { // displays them on the screen
+    // Go through all the animals and move, wrap, and display them
+    for (let i = 0; i < garden.nuts.length; i++) {
+      let nut = garden.nuts[i];
+      console.log(i)
+      nut.renderNut();
+    }
+  }
+  createAndRenderTheGarden();
+
+  createNuts();
+  renderNuts();
+
+  // Create and render squirrels
+  function createSquirrels() {
+    for (let i = 0; i < garden.numSquirrels; i++) {
+      let x = Math.random() * (window.innerWidth - 40) + 20;
+      let y = Math.random() * 100 + 120;
+      let size = Math.random() * 20 + 30;
       let index = Math.floor(Math.random() * garden.squirrelImages.length)
       let path = garden.squirrelImages[index]
       let squirrel = new Squirrel(x, y, size, size, path);
       garden.squirrels.push(squirrel);
-    }
-
-  }
-
-  function renderSquirrels() {
-    for (let i = 0; i < garden.squirrels.length; i++) {
-      // Get the dog at index i from the array
-      let squirrel = garden.squirrels[i];
       squirrel.renderSquirrel();
     }
   }
 
-  function animateSquirrel() {
-    for (let i = 0; i < garden.squirrels.length; i++) {
-      // Get the dog at index i from the array
-      let squirrel = garden.squirrels[i];
+  function animateSquirrels() {
+    for (let squirrel of garden.squirrels) {
       squirrel.move();
+      squirrel.renderSquirrel();
+      for (let nut of garden.nuts) {
+        squirrel.tryPickupNut(nut);
+      }
     }
-    window.requestAnimationFrame(animateSquirrel);
+    renderNuts();
+    requestAnimationFrame(animateSquirrels);
   }
 
-  function createTempNuts() {
-    for (let i = 0; i < garden.numTempNuts; i++) {
-      let x = Math.random() * window.innerWidth;
-      let y = Math.random() * 600;
-      let size = randomRange(40, 60);
-      let tempNutColor = {
-        r: parseInt(Math.random() * 255),
-        g: parseInt(Math.random() * 255),
-        b: parseInt(Math.random() * 255),
-      };
-
-      let tempNut = new TempNut(x, y, size, tempNutColor);
-      garden.tempNuts.push(tempNut);
-    }
-  }
-
-  function renderTempNuts() {
-    for (let i = 0; i < garden.tempNuts.length; i++) {
-      let tempNuts = garden.tempNuts[i];
-      tempNuts.renderTempNut();
-    }
-  }
-
-  createTempNuts();
   createSquirrels();
-  createAndRenderTheGarden();
-  renderSquirrels();
-  renderTempNuts();
-  window.requestAnimationFrame(animateSquirrel);
+  animateSquirrels();
+
 
 }
 
-function randomRange(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-// colors
-// r: 185,
-//   g: 149,
-//     b: 108
 
 /*** TEAM A AND B NEED TO COORDINATE
  
