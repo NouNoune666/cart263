@@ -33,8 +33,6 @@ function start() {
 
 
 
-
-
     // mouse move(something moves)
 
     // key space(becomes bigger)
