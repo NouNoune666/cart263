@@ -1,0 +1,59 @@
+@font-face {
+    font-family: nintendoFont;
+    /* set name */
+    src: url(/assets/fonts/Nintendo-DS-BIOS.ttf);
+    /* url of the font */
+}
+
+body {
+    padding: 10px;
+    text-align: center;
+    color: white;
+    background: #000000;
+    opacity: 1;
+    position: relative;
+    align-content: center;
+    font-family: 'nintendoFont', sans-serif;
+    font-size: 80px;
+}
+
+
+#allBoxes {
+    height: 1800px;
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 0%;
+    border-color: white;
+    padding: 10px;
+    position: relative;
+}
+
+.box {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 0%;
+    padding: 30px;
+
+}
+
+#boxA {
+    background-color: hsl(324, 59%, 55%);
+    top: 100px;
+    left: 150px;
+    text-align: center;
+}
+
+#boxB {
+    background-color: rgb(71, 222, 99);
+    top: 400px;
+    left: 450px;
+}
+
+#boxC {
+    background-color: rgb(102, 100, 237);
+    top: 600px;
+    left: 750px;
+}

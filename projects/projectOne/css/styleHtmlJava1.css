@@ -1,0 +1,61 @@
+body {
+    padding: 10px;
+    color: white;
+    background: #000000;
+    opacity: 1;
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+}
+
+.allShapes {
+    background: rgba(232, 146, 233, 0.808);
+    padding: 10px;
+    color: black;
+}
+
+/* same as .allShapes */
+/* main {
+    background: rgba(232, 146, 233, 0.808);
+    padding: 10px;
+    color: black;
+} */
+
+.squareShape {
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 0%;
+    padding: 10px;
+    text-align: center;
+}
+
+.circleShape {
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 100%;
+    padding: 10px;
+    text-align: center;
+}
+
+#firstShape {
+    background: rgba(223, 84, 34, 0.808);
+}
+
+#secondShape {
+    background: rgba(62, 207, 149, 0.808);
+}
+
+#thirdShape {
+    background: rgba(142, 184, 38, 0.808);
+}
+
+#fourthShape {
+    background: rgba(68, 62, 175, 0.808);
+}
+
+#fifthShape {
+    background: rgba(219, 52, 136, 0.808);
+}
+
+p span {
+    font-weight: bold;
+}
