@@ -59,7 +59,7 @@ function start() {
     })
 
     // keyboard event on box C
-    let growth = 50;
+    let growth = 10;
     let boxC = document.querySelector("#boxC")
 
     window.addEventListener("keydown", function (e) {
@@ -81,33 +81,29 @@ function start() {
             let boxCWidth = parseInt(getComputedStyle(document.querySelector("#boxC")).width);
             let boxCHeight = parseInt(getComputedStyle(document.querySelector("#boxC")).height);
 
-
             boxC.style.width = boxCWidth - growth + "px";
             boxC.style.height = boxCHeight - growth + "px";
         }
     })
 
-
-
     // custom bool hidden
     let button = document.querySelectorAll(".box")[3];
-    let pingu = document.querySelector("img");
+    let pingu = document.querySelector(".pinguImg");
     console.log(pingu)
     button.addEventListener("click", function (e) {
         // Check current state
         pingu.classList.toggle("active-class")
     });
 
-
     // mouse event - drawing dots
     let canvas = document.querySelector("#allBoxes");
 
-    let width = 20;
-    let height = 20;
+    let width = 10;
+    let height = 10;
 
     canvas.addEventListener("mousemove", function (e) {
         // create new div, append to parent "div", set style
-        let parent = document.querySelector("#allBoxes ");
+        let parent = document.querySelector("body");
         let newDiv = document.createElement("div");
         newDiv.classList.add("dot");
         parent.appendChild(newDiv);

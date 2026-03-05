@@ -7,6 +7,11 @@ body {
     position: relative;
 }
 
+header {
+    text-align: center;
+    padding: 50px;
+}
+
 .allShapes {
     background: rgba(232, 146, 233, 0.808);
     padding: 10px;
