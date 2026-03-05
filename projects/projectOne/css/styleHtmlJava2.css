@@ -29,7 +29,7 @@ body {
 }
 
 .box {
-    position: relative;
+    position: absolute;
     width: 300px;
     height: 300px;
     border-width: 5px;
@@ -41,19 +41,42 @@ body {
 
 #boxA {
     background-color: hsl(324, 59%, 55%);
-    top: 100px;
-    left: 150px;
+    /* top: 100px; */
+    /* left: 150px; */
     text-align: center;
 }
 
 #boxB {
     background-color: rgb(71, 222, 99);
-    top: 400px;
-    left: 450px;
+    /* top: 400px;
+    left: 450px; */
 }
 
 #boxC {
     background-color: rgb(102, 100, 237);
-    top: 600px;
-    left: 750px;
+    /* top: 600px;
+    left: 750px; */
+}
+
+#text {
+    position: absolute
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    position: absolute;
+}
+
+img {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+img.active-class {
+    display: flex;
+
+    /* shows when active-class is added */
 }
