@@ -95,6 +95,7 @@ function start() {
         pingu.classList.toggle("active-class")
     });
 
+
     // mouse event - drawing dots
     let canvas = document.querySelector("#allBoxes");
 
