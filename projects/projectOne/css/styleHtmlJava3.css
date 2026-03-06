@@ -91,3 +91,22 @@ div {
     border-style: solid;
     border-width: 2px;
 }
+
+.animation {
+    position: relative;
+    border-width: 5px;
+    height: 600px;
+    border-style: solid;
+    border-radius: 0%;
+    align-items: center;
+    color: yellow;
+}
+
+#circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: absolute;
+    background: white;
+    padding: 0;
+}

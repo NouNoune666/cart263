@@ -105,7 +105,7 @@ window.onload = function () {
         else {
             gridArray[randomIndex].style.background = "black"
         }
-        console.log(fillingWithPink)
+        // console.log(fillingWithPink)
     }
 
 
@@ -124,7 +124,55 @@ window.onload = function () {
         if (pinkCount === 0) {
             fillingWithPink = true
         }
-        console.log(pinkCount)
+        // console.log(pinkCount)
     }
-}
 
+    // using request animation frame
+    let circleDiv = document.createElement("div");
+    circleDiv.setAttribute("id", "circle");
+    let parent = document.querySelector(".animation");
+    parent.appendChild(circleDiv)
+
+    circleDiv.style.left = "25px";
+    circleDiv.style.top = "25px";
+
+    let speedH = 2;
+    let speedV = 2;
+    let circle = document.querySelector("#circle");
+    let circleSize = 20;
+
+    window.requestAnimationFrame(animate)
+
+    function animate() {
+
+        // console.log(circle.style.top);
+        circle.style.top = parseInt(circle.style.top) + speedV + "px"
+        circle.style.left = parseInt(circle.style.left) + speedH + "px"
+
+        checkBounds();
+        window.requestAnimationFrame(animate);
+    }
+
+    function checkBounds() {
+
+        let bounds = parent.getBoundingClientRect();
+        console.log(circle.style.top)
+
+        if (parseInt(circle.style.top) > bounds.height - circleSize) {
+            speedV *= -1
+        }
+        else if (parseInt(circle.style.top) < 0) {
+            speedV *= -1
+        }
+        if (parseInt(circle.style.left) > bounds.width - circleSize) {
+            speedH *= -1
+        }
+        else if (parseInt(circle.style.left) < 0) {
+            speedH *= -1
+        }
+
+
+
+    }
+
+}
