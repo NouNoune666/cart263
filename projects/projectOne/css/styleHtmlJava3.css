@@ -1,0 +1,93 @@
+@font-face {
+    font-family: nintendoFont;
+    /* set name */
+    src: url(/assets/fonts/Nintendo-DS-BIOS.ttf);
+    /* url of the font */
+}
+
+body {
+    padding: 10px;
+    color: white;
+    background: #000000;
+    opacity: 1;
+    font-family: 'nintendoFont', sans-serif;
+    font-size: 30px;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 0%;
+    padding: 10px;
+}
+
+header {
+    text-align: center;
+    padding: 50px;
+}
+
+div {
+    padding: 10px;
+}
+
+.timeoutText {
+    color: pink;
+    padding: 10px;
+}
+
+.intervalText {
+    color: purple;
+    padding: 10px;
+}
+
+.dynamicTimeoutText {
+    color: blue;
+    padding: 10px;
+}
+
+.clearInterval {
+    color: green;
+    padding: 10px;
+}
+
+.timeoutText,
+.intervalText,
+.dynamicTimeoutText,
+.clearInterval {
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+.grid {
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 0%;
+    align-items: center;
+    color: pink;
+}
+
+.grid-cells {
+    position: relative;
+    width: 550px;
+    height: 600px;
+    margin: auto;
+    /* centers itself within the parent */
+
+}
+
+.grid-cell {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-color: rgb(255, 255, 255);
+    border-style: solid;
+    border-width: 2px;
+}
