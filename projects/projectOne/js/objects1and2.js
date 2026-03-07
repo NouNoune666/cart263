@@ -1,6 +1,7 @@
 window.onload = function () {
     let tree = new Tree();
     tree.render();
+
     let dino = new Dino();
     dino.render();
 
