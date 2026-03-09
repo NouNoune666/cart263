@@ -9,12 +9,16 @@ body {
     color: white;
     background: #2d50f0;
     font-family: 'nintendoFont', sans-serif;
-    font-size: 30px;
 }
 
 header {
     text-align: center;
     padding: 50px;
+    font-size: 90px;
+}
+
+main {
+    font-size: 40px;
 }
 
 .drawings {

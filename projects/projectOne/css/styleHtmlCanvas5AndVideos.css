@@ -20,3 +20,53 @@ header {
     text-align: center;
     padding: 50px;
 }
+
+.divOne {
+    padding-top: 100px;
+    color: #9caef8;
+}
+
+.divTwo {
+    padding-top: 100px;
+    color: pink;
+}
+
+.divThree {
+    padding-top: 100px;
+    color: red;
+}
+
+#nav-box {
+    display: flex;
+    background-color: red;
+    justify-content: space-around;
+    width: 400px;
+    margin: 0 auto;
+}
+
+#nav-box>span {
+    margin: 1%;
+    min-width: 15%;
+    display: inline-block;
+    background-color: white;
+    text-align: center;
+    padding: 2px;
+    border: 2px;
+    border-style: dotted;
+    border-color: black;
+}
+
+
+#nav-box>span:hover {
+    background: black;
+    cursor: pointer;
+    color: red;
+}
+
+video {
+    border: 1px solid red;
+}
+
+p span {
+    font-style: italic;
+}

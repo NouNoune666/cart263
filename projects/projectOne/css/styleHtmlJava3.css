@@ -21,11 +21,13 @@ main {
     border-style: solid;
     border-radius: 0%;
     padding: 10px;
+    font-size: 30px;
 }
 
 header {
     text-align: center;
     padding: 50px;
+    font-size: 90px;
 }
 
 div {
