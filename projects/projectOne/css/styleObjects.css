@@ -1,7 +1,7 @@
 @font-face {
     font-family: nintendoFont;
     /* set name */
-    src: url(/assets/fonts/Nintendo-DS-BIOS.ttf);
+    src: url(../assets/fonts/Nintendo-DS-BIOS.ttf);
     /* url of the font */
 }
 
