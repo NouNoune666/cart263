@@ -16,6 +16,7 @@ class DrawingBoard {
     });
 
     window.addEventListener("keydown", function (e) {
+
       if (e.key === "Backspace") {
         self.removeObj();
         self.removeObj();
@@ -83,7 +84,11 @@ class DrawingBoard {
   }
 
   removeObj() {
-    this.objectsOnCanvas.pop();
+    if (this.drawingBoardId === "partA") {
+      // console.log("in A")
+      this.objectsOnCanvas.pop();
+    }
+
   }
 
   /* method to add display objects on canvas */
