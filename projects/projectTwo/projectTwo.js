@@ -12,7 +12,7 @@ const sizes = {
 }
 const fov = 75
 const camera = new THREE.PerspectiveCamera(fov, sizes.width / sizes.height)
-// move it backwards to properly see
+// move it backwards to   see
 camera.position.z = 3
 scene.add(camera)
 
@@ -98,7 +98,6 @@ wall2.position.x = -1
 wall2.position.y = 1
 
 // LIGHTING
-
 const spotLight = new THREE.SpotLight(0xffffff, 20, 3, Math.PI * 0.15, 0.25, 1);
 spotLight.position.set(0, 2, 1)
 scene.add(spotLight)
