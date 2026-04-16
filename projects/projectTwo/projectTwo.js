@@ -4,13 +4,16 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
 
-
 const scene = new THREE.Scene()
+// nou noune interaction
 const raycaster = new THREE.Raycaster()
 let mouseWasClicked = false
+// noun noune
 let currentModel = null
 let firstNounoune = true;
 let currentIntersectedObj = null;
+// storm noune
+let currentStormModel = null
 
 /** CAMERA */
 const sizes = {
@@ -19,11 +22,9 @@ const sizes = {
 }
 const fov = 75
 const camera = new THREE.PerspectiveCamera(fov, sizes.width / sizes.height)
-// move it backwards to   see
 camera.position.z = 3
 camera.position.y = 1
 camera.position.x = 3
-
 scene.add(camera)
 
 /** AXES HELPER */
@@ -65,8 +66,13 @@ gltfStormNoune5 = await gltfLoader.loadAsync("3dModels/stormNoune/stormNoune5.gl
 //Dude Noune
 let gltfDudeNoune = null;
 gltfDudeNoune = await gltfLoader.loadAsync("3dModels/dudeNoune/dudeNoune.gltf")
+// phone
+let gltfPhone = null;
+gltfPhone = await gltfLoader.loadAsync("3dModels/phone/phone.gltf")
 
-// adding to scene
+
+
+// adding 3d models to scene
 let objs = []
 objs.push(gltfNounoune1)
 objs.push(gltfNounoune2)
@@ -76,59 +82,81 @@ objs.push(gltfStormNoune3)
 objs.push(gltfStormNoune4)
 objs.push(gltfStormNoune5)
 objs.push(gltfDudeNoune)
+objs.push(gltfPhone)
 console.log(objs[2])
 
 addAndRun(objs)
 async function addAndRun(loadedObjsArray) {
-    console.log(loadedObjsArray[1])
     // nou noune
     currentModel = SkeletonUtils.clone(loadedObjsArray[0].scene.children[0])
-    // scene.updateMatrix()
     console.log(currentModel)
-
-    // console.log(currentModel);
-    let mixer = new THREE.AnimationMixer(currentModel)
     scene.add(currentModel)
-    // storm noune
-    let stormNoune1Model = loadedObjsArray[2].scene.children[0]
-    scene.add(stormNoune1Model)
-    stormNoune1Model.scale.set(.005, .005, .005)
-    stormNoune1Model.position.set(2, 0, 0)
+
     // dude noune
     let dudeNouneModel = loadedObjsArray[7].scene.children[0]
-    console.log(dudeNouneModel)
-    // const mixer2 = new THREE.AnimationMixer(dudeNouneModel)
     scene.add(dudeNouneModel)
+    dudeNouneModel.scale.set(.5, .5, .5)
+    dudeNouneModel.position.set(4, 0, 0)
 
-    // animation
+    // storm noune
+    currentStormModel = SkeletonUtils.clone(loadedObjsArray[2].scene.children[0])
+    // let stormNoune1Model = loadedObjsArray[2].scene.children[0]
+    scene.add(currentStormModel)
+    currentStormModel.scale.set(0.55, 0.55, 0.55)
+    currentStormModel.position.set(2, 0, 0)
+
+    //mixers
+    let mixer = new THREE.AnimationMixer(currentModel)
+    let mixerTwo = new THREE.AnimationMixer(dudeNouneModel)
+
+    // animation nou noune
     let clip = loadedObjsArray[0].animations[2];
     let anim_action = mixer.clipAction(clip);
     anim_action.play()
+    // animation nou noune
+    let clipTwo = loadedObjsArray[7].animations[0];
+    let anim_action_two = mixerTwo.clipAction(clipTwo);
+    anim_action_two.play()
 
     let elapsedTime = 0;
-
+    let index = 2;
+    let previousTime = 0;
     window.requestAnimationFrame(animate);
     function animate(timer) {
-
+        // time stuff for clicking event
         let deltaTime = (timer - elapsedTime) / 1000; // convert ms to seconds
         elapsedTime = timer;
+        // controls stuff
         controls.update();
-        // raycasting for click events
 
+        // Storm Noune changing poses
+        let myTimer = Math.ceil((timer / 1000))
+        console.log(myTimer)
+        if (myTimer % 3 === 0 && previousTime !== myTimer) {
+            if (index === 6) {
+                index = 2
+            }
+            else {
+                index++
+            }
+            scene.remove(currentStormModel)
+            currentStormModel = SkeletonUtils.clone(loadedObjsArray[index].scene.children[0])
+            scene.add(currentStormModel)
+            currentStormModel.scale.set(.55, .55, .55)
+            currentStormModel.position.set(2, 0, 0)
+        }
+        previousTime = myTimer
+
+        // Nou Noune clicking event
         if (mouseWasClicked) {
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObject(currentModel)
-
-
             if (intersects[0] !== undefined) {
-
                 currentIntersectedObj = intersects[0]
             }
             if (currentIntersectedObj !== null) {
                 console.log(currentIntersectedObj)
-
                 if (firstNounoune) {
-                    // currentIntersectedObj.object.material.color.set("#ffe600");
                     scene.remove(currentModel)
                     currentModel = SkeletonUtils.clone(loadedObjsArray[1].scene.children[0])
                     scene.add(currentModel)
@@ -156,29 +184,21 @@ async function addAndRun(loadedObjsArray) {
                     console.log(anim_action)
                     console.log(clip)
                 }
-
-
             }
             mouseWasClicked = false;
             currentIntersectedObj = null;
-
         }
-
-
-
         if (mixer) {
             mixer.update(deltaTime); // advance the animation by the time since last frame
+        }
+        if (mixerTwo) {
+            mixerTwo.update(deltaTime); // advance the animation by the time since last frame
         }
         renderer.render(scene, camera);
         window.requestAnimationFrame(animate);
     }
     // nou noune
     currentModel.scale.set(.55, .55, .55)
-    //dude noune
-    dudeNouneModel.scale.set(.5, .5, .5)
-    dudeNouneModel.position.set(4, 0, 0)
-
-
 
     /** MESHES */
     const loader = new THREE.TextureLoader();
@@ -256,7 +276,6 @@ async function addAndRun(loadedObjsArray) {
     spotLight3.target = floor3
     const spotLightHelper3 = new THREE.SpotLightHelper(spotLight3);
     scene.add(spotLightHelper3);
-
 }
 
 const mouse = new THREE.Vector2();
@@ -268,7 +287,4 @@ window.addEventListener("mousemove", function (event) {
 window.addEventListener("click", function (event) {
     console.log("click")
     mouseWasClicked = true
-
-
-
 })
