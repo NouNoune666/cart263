@@ -3,11 +3,15 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
+import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 
 const scene = new THREE.Scene()
+console.log(scene)
 // nou noune interaction
 const raycaster = new THREE.Raycaster()
+
 let mouseWasClicked = false
+let mouseIsOver = true
 // noun noune
 let currentModel = null
 let firstNounoune = true;
@@ -22,11 +26,14 @@ const sizes = {
 }
 const fov = 75
 const camera = new THREE.PerspectiveCamera(fov, sizes.width / sizes.height)
-camera.position.z = 3
+
+camera.position.z = 2.3
 camera.position.y = 1
-camera.position.x = 3
+camera.position.x = 2
+// camera.rotation.y = Math.PI / 2
 scene.add(camera)
 
+console.log(camera.position)
 /** AXES HELPER */
 // Shows colored axes: X = red, Y = green, Z = blue
 const axesHelper = new THREE.AxesHelper(3)
@@ -40,7 +47,29 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 
 /** CONTROLS */
-const controls = new OrbitControls(camera, canvas)
+// const controls = new OrbitControls(camera, canvas)
+// controls.enableRotate = false
+// controls.enableZoom = false
+// controls.enablePan = false
+
+window.addEventListener("keydown", function (e) {
+    console.log(camera.position)
+    if (camera.position.z < 2.4 && e.key === "ArrowUp")
+        camera.position.z += -0.1
+
+    if (camera.position.z > 0.69 && e.key === "ArrowDown")
+        camera.position.z += 0.1
+
+    if (camera.position.x > -0.1 && e.key === "ArrowLeft")
+        camera.position.x += -0.1
+
+    if (camera.position.x < 4.1 && e.key === "ArrowRight")
+        camera.position.x += 0.1
+})
+
+
+
+
 
 /** 3D MODELS */
 // loading
@@ -49,9 +78,7 @@ const gltfLoader = new GLTFLoader();
 let gltfNounoune1 = null;
 gltfNounoune1 = await gltfLoader.loadAsync("3dModels/nounoune/nounoune1.gltf")
 let gltfNounoune2 = null;
-console.log(gltfNounoune1)
 gltfNounoune2 = await gltfLoader.loadAsync("3dModels/nounoune/nounoune2.gltf")
-console.log(gltfNounoune2)
 //Storm Noune
 let gltfStormNoune1 = null;
 gltfStormNoune1 = await gltfLoader.loadAsync("3dModels/stormNoune/stormNoune1.gltf")
@@ -87,12 +114,23 @@ objs.push(gltfDudeNoune)
 objs.push(gltfInstagram)
 objs.push(gltfgoogleForms)
 
+
+
 addAndRun(objs)
 async function addAndRun(loadedObjsArray) {
     // nou noune
     currentModel = SkeletonUtils.clone(loadedObjsArray[0].scene.children[0])
-    console.log(currentModel)
     scene.add(currentModel)
+    //phantom nou noune for cursor changes, just a simple 3d rectangle
+    const phantomMaterial = new THREE.MeshBasicMaterial({ color: 0x800080 })
+    const phantomGeometry = new THREE.BoxGeometry()
+    const phantomMesh = new THREE.Mesh(phantomGeometry, phantomMaterial)
+    scene.add(phantomMesh)
+    phantomMesh.position.set(0, 0.5, 0)
+    phantomMesh.scale.set(0.25, 1, 0.22)
+    phantomMesh.material.transparent = true //enables opacity
+    phantomMesh.material.opacity = 0
+
 
     // dude noune
     let dudeNouneModel = loadedObjsArray[7].scene.children[0]
@@ -113,6 +151,8 @@ async function addAndRun(loadedObjsArray) {
     instagramModel.scale.set(0.035, 0.035, 0.035)
     instagramModel.position.set(1, 1, 0)
     instagramModel.rotation.set(Math.PI / 2, 0, 0)
+    instagramModel.material.transparent = true //enables opacity
+
 
     // google forms
     let googleFormsModel = loadedObjsArray[9].scene.children[0]
@@ -120,6 +160,7 @@ async function addAndRun(loadedObjsArray) {
     googleFormsModel.scale.set(0.25, 0.25, 0.25)
     googleFormsModel.position.set(3, 1, 0)
     googleFormsModel.rotation.set(0, - Math.PI / 2, 0)
+    googleFormsModel.material.transparent = true //enables opacity
 
     //mixers
     let mixer = new THREE.AnimationMixer(currentModel)
@@ -145,12 +186,12 @@ async function addAndRun(loadedObjsArray) {
         let deltaTime = (timer - elapsedTime) / 1000; // convert ms to seconds
         elapsedTime = timer;
         // controls stuff
-        controls.update();
-        instagramModel.rotation.z += 0.01
-        googleFormsModel.rotation.y += 0.01
+        // controls.update();
+
+
         // Storm Noune changing poses
         let myTimer = Math.ceil((timer / 1000))
-        console.log(myTimer)
+        // console.log(myTimer)
         if (myTimer % 3 === 0 && previousTime !== myTimer) {
             if (index === 6) {
                 index = 2
@@ -166,7 +207,53 @@ async function addAndRun(loadedObjsArray) {
         }
         previousTime = myTimer
 
-        // Nou Noune clicking event
+        // hovering events
+        if (mouseIsOver) {
+            raycaster.setFromCamera(mouse, camera);
+            const intersectsInstagram = raycaster.intersectObject(instagramModel)
+            const intersectsGoogleForms = raycaster.intersectObject(googleFormsModel)
+            const intersectsPhantomNounoune = raycaster.intersectObject(phantomMesh)
+
+            // cursor changes
+            if (intersectsPhantomNounoune[0] || intersectsInstagram[0] || intersectsGoogleForms[0]
+            ) { document.body.style.cursor = "pointer" }
+            else { document.body.style.cursor = "auto" }
+
+            // instagram
+            if (intersectsInstagram[0]) {
+                instagramModel.position.set(1, 1, 0)
+                instagramModel.rotation.set(Math.PI / 2, 0, 0)
+            }
+            else {
+                rotatingModel()
+            }
+            // google forms
+            if (intersectsGoogleForms[0]) {
+                // console.log('over instagram')
+                googleFormsModel.scale.set(0.25, 0.25, 0.25)
+                googleFormsModel.position.set(3, 1, 0)
+                googleFormsModel.rotation.set(0, - Math.PI / 2, 0)
+            }
+            else {
+                rotatingModel()
+            }
+            if (intersectsPhantomNounoune[0]) {
+                console.log("intersecting")
+                currentModel.scale.set(.55, .55, .55)
+
+            }
+            else {
+                currentModel.rotation.z += 0.007
+            }
+
+        }
+
+        function rotatingModel() {
+            instagramModel.rotation.z += 0.01
+            googleFormsModel.rotation.y += 0.01
+        }
+
+        // clicking events
         if (mouseWasClicked) {
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObject(currentModel)
@@ -176,7 +263,6 @@ async function addAndRun(loadedObjsArray) {
             if (intersectsInstagram[0]) {
                 console.log('instagram clicked')
                 window.open('https://www.instagram.com/simulatorxr/');
-
             }
 
             if (intersectsGoogleForms[0]) {
@@ -201,8 +287,6 @@ async function addAndRun(loadedObjsArray) {
                     clip = loadedObjsArray[1].animations[2];
                     anim_action = mixer.clipAction(clip);
                     anim_action.play()
-                    // console.log(anim_action)
-                    // console.log(clip)
                 }
                 else {
                     scene.remove(currentModel)
@@ -340,4 +424,9 @@ window.addEventListener("mousemove", function (event) {
 window.addEventListener("click", function (event) {
     // console.log("click")
     mouseWasClicked = true
+})
+
+window.addEventListener("mouseover", function (event) {
+    // console.log("hey i am a mouse")
+    mouseIsOver = true
 })
