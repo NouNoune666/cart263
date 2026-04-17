@@ -67,9 +67,11 @@ gltfStormNoune5 = await gltfLoader.loadAsync("3dModels/stormNoune/stormNoune5.gl
 let gltfDudeNoune = null;
 gltfDudeNoune = await gltfLoader.loadAsync("3dModels/dudeNoune/dudeNoune.gltf")
 // phone
-let gltfPhone = null;
-gltfPhone = await gltfLoader.loadAsync("3dModels/phone/phone.gltf")
-
+let gltfInstagram = null;
+gltfInstagram = await gltfLoader.loadAsync("3dModels/instagram/instagram.gltf")
+// google forms
+let gltfgoogleForms = null;
+gltfgoogleForms = await gltfLoader.loadAsync("3dModels/googleForms/googleForms.gltf")
 
 
 // adding 3d models to scene
@@ -82,8 +84,8 @@ objs.push(gltfStormNoune3)
 objs.push(gltfStormNoune4)
 objs.push(gltfStormNoune5)
 objs.push(gltfDudeNoune)
-objs.push(gltfPhone)
-console.log(objs[2])
+objs.push(gltfInstagram)
+objs.push(gltfgoogleForms)
 
 addAndRun(objs)
 async function addAndRun(loadedObjsArray) {
@@ -105,6 +107,20 @@ async function addAndRun(loadedObjsArray) {
     currentStormModel.scale.set(0.55, 0.55, 0.55)
     currentStormModel.position.set(2, 0, 0)
 
+    // instagram
+    let instagramModel = loadedObjsArray[8].scene.children[0]
+    scene.add(instagramModel)
+    instagramModel.scale.set(0.035, 0.035, 0.035)
+    instagramModel.position.set(1, 1, 0)
+    instagramModel.rotation.set(Math.PI / 2, 0, 0)
+
+    // google forms
+    let googleFormsModel = loadedObjsArray[9].scene.children[0]
+    scene.add(googleFormsModel)
+    googleFormsModel.scale.set(0.25, 0.25, 0.25)
+    googleFormsModel.position.set(3, 1, 0)
+    googleFormsModel.rotation.set(0, - Math.PI / 2, 0)
+
     //mixers
     let mixer = new THREE.AnimationMixer(currentModel)
     let mixerTwo = new THREE.AnimationMixer(dudeNouneModel)
@@ -121,6 +137,8 @@ async function addAndRun(loadedObjsArray) {
     let elapsedTime = 0;
     let index = 2;
     let previousTime = 0;
+
+    /** ANIMATION */
     window.requestAnimationFrame(animate);
     function animate(timer) {
         // time stuff for clicking event
@@ -128,7 +146,8 @@ async function addAndRun(loadedObjsArray) {
         elapsedTime = timer;
         // controls stuff
         controls.update();
-
+        instagramModel.rotation.z += 0.01
+        googleFormsModel.rotation.y += 0.01
         // Storm Noune changing poses
         let myTimer = Math.ceil((timer / 1000))
         console.log(myTimer)
@@ -151,11 +170,26 @@ async function addAndRun(loadedObjsArray) {
         if (mouseWasClicked) {
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObject(currentModel)
+            const intersectsInstagram = raycaster.intersectObject(instagramModel)
+            const intersectsGoogleForms = raycaster.intersectObject(googleFormsModel)
+
+            if (intersectsInstagram[0]) {
+                console.log('instagram clicked')
+                window.open('https://www.instagram.com/simulatorxr/');
+
+            }
+
+            if (intersectsGoogleForms[0]) {
+                console.log('google forms clicked')
+                window.open('https://docs.google.com/forms/d/e/1FAIpQLSfmegoERabwSOiWI4SYLfRCDdK-O-TT5tOWlZzADOjb8JYFaw/viewform?usp=sharing&ouid=108949411424619377579');
+            }
+
+
             if (intersects[0] !== undefined) {
                 currentIntersectedObj = intersects[0]
             }
             if (currentIntersectedObj !== null) {
-                console.log(currentIntersectedObj)
+                // console.log(currentIntersectedObj)
                 if (firstNounoune) {
                     scene.remove(currentModel)
                     currentModel = SkeletonUtils.clone(loadedObjsArray[1].scene.children[0])
@@ -167,8 +201,8 @@ async function addAndRun(loadedObjsArray) {
                     clip = loadedObjsArray[1].animations[2];
                     anim_action = mixer.clipAction(clip);
                     anim_action.play()
-                    console.log(anim_action)
-                    console.log(clip)
+                    // console.log(anim_action)
+                    // console.log(clip)
                 }
                 else {
                     scene.remove(currentModel)
@@ -181,8 +215,8 @@ async function addAndRun(loadedObjsArray) {
                     clip = loadedObjsArray[0].animations[2];
                     anim_action = mixer.clipAction(clip);
                     anim_action.play()
-                    console.log(anim_action)
-                    console.log(clip)
+                    // console.log(anim_action)
+                    // console.log(clip)
                 }
             }
             mouseWasClicked = false;
@@ -256,26 +290,45 @@ async function addAndRun(loadedObjsArray) {
     wall5.position.y = 1
 
     // LIGHTING
-    const spotLight = new THREE.SpotLight(0xffffff, 10, 3, Math.PI * 0.15, 0.25, 1);
+    const spotLight = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.15, 0.25, 1);
     spotLight.position.set(0, 2, 1)
     scene.add(spotLight)
     spotLight.target = floor
     const spotLightHelper = new THREE.SpotLightHelper(spotLight);
     scene.add(spotLightHelper);
 
-    const spotLight2 = new THREE.SpotLight(0xffffff, 10, 3, Math.PI * 0.15, 0.25, 1);
+    const spotLight2 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.15, 0.25, 1);
     spotLight2.position.set(2, 2, 1)
     scene.add(spotLight2)
     spotLight2.target = floor2
     const spotLightHelper2 = new THREE.SpotLightHelper(spotLight2);
     scene.add(spotLightHelper2);
 
-    const spotLight3 = new THREE.SpotLight(0xffffff, 10, 3, Math.PI * 0.15, 0.25, 1);
+    const spotLight3 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.15, 0.25, 1);
     spotLight3.position.set(4, 2, 1)
     scene.add(spotLight3)
     spotLight3.target = floor3
     const spotLightHelper3 = new THREE.SpotLightHelper(spotLight3);
     scene.add(spotLightHelper3);
+
+    const spotLight4 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.06, 0.25, 1);
+    spotLight4.position.set(1, 2, 2)
+    scene.add(spotLight4)
+    spotLight4.target = instagramModel
+    const spotLightHelper4 = new THREE.SpotLightHelper(spotLight4);
+    scene.add(spotLightHelper4);
+
+    const spotLight5 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.09, 0.25, 1);
+    spotLight5.position.set(3, 2, 2)
+    scene.add(spotLight5)
+    spotLight5.target = googleFormsModel
+    const spotLightHelper5 = new THREE.SpotLightHelper(spotLight5);
+    scene.add(spotLightHelper5);
+
+    const HemisphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+    scene.add(HemisphereLight);
+    const HemisphereLightHelper = new THREE.HemisphereLightHelper(HemisphereLight, 5);
+    scene.add(HemisphereLightHelper);
 }
 
 const mouse = new THREE.Vector2();
@@ -285,6 +338,6 @@ window.addEventListener("mousemove", function (event) {
 });
 
 window.addEventListener("click", function (event) {
-    console.log("click")
+    // console.log("click")
     mouseWasClicked = true
 })

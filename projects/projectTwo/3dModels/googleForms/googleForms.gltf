@@ -15,25 +15,13 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"pCube6",
-			"rotation":[
-				0,
-				0,
-				1,
-				4.371138828673793e-08
-			],
-			"scale":[
-				0.10000000149011612,
-				0.10000000149011612,
-				0.10000000149011612
-			]
+			"name":"Cube"
 		}
 	],
 	"materials":[
 		{
-			"alphaMode":"BLEND",
 			"doubleSided":true,
-			"name":"lambert4",
+			"name":"Material",
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
 					"index":0
@@ -45,7 +33,7 @@
 	],
 	"meshes":[
 		{
-			"name":"Mesh",
+			"name":"Cube",
 			"primitives":[
 				{
 					"attributes":{
@@ -68,8 +56,8 @@
 	"images":[
 		{
 			"mimeType":"image/png",
-			"name":"iphone 2",
-			"uri":"iphone%202.png"
+			"name":"googleForms",
+			"uri":"googleForms.png"
 		}
 	],
 	"accessors":[
@@ -78,14 +66,14 @@
 			"componentType":5126,
 			"count":24,
 			"max":[
-				0.9525166749954224,
-				1.8597471714019775,
-				0.06542295217514038
+				0.1000000461935997,
+				1,
+				0.699999988079071
 			],
 			"min":[
-				-0.9525166749954224,
-				-1.8597471714019775,
-				-0.06542295217514038
+				-0.1000000461935997,
+				-1,
+				-0.699999988079071
 			],
 			"type":"VEC3"
 		},
@@ -143,7 +131,7 @@
 	"buffers":[
 		{
 			"byteLength":840,
-			"uri":"phone.bin"
+			"uri":"googleForms.bin"
 		}
 	]
 }
