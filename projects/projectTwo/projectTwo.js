@@ -119,7 +119,7 @@ let gltfgoogleForms = null;
 gltfgoogleForms = await gltfLoader.loadAsync("3dModels/googleForms/googleForms.gltf")
 // trans flag
 let gltfTransFlag = null;
-gltfTransFlag = await gltfLoader.loadAsync("3dModels/transFlag/transflag.gltf")
+gltfTransFlag = await gltfLoader.loadAsync("3dModels/transFlag/transFlag.gltf")
 // desk
 let gltfDesk = null;
 gltfDesk = await gltfLoader.loadAsync("3dModels/desk/desk.gltf")
