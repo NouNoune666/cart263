@@ -62,32 +62,32 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 
 /** CONTROLS */
-const controls = new OrbitControls(camera, canvas)
+// const controls = new OrbitControls(camera, canvas)
 
-// window.addEventListener("keydown", function (e) {
-//     // Position
-//     console.log(camera.position)
-//     if (camera.position.z > 0.8 && e.key === "ArrowUp") {
-//         camera.position.z += -0.1
-//     }
-//     if (camera.position.z < 2.3 && e.key === "ArrowDown") {
-//         camera.position.z += 0.1
-//     }
-//     if (camera.position.x <= 4.2 && camera.position.x >= 0.10 && e.key === "ArrowLeft") {
-//         camera.position.x += -0.1
-//     }
-//     if (camera.position.x >= -0.10 && camera.position.x < 4 && e.key === "ArrowRight") {
-//         camera.position.x += 0.1
-//     }
-//     // Rotation
-//     // console.log(camera.rotation)
-//     if (camera.rotation.x < 0.2 && e.key === "Shift") {
-//         camera.rotation.x += 0.1
-//     }
-//     if (camera.rotation.x > -0.4 && e.key === "Control") {
-//         camera.rotation.x += -0.1
-//     }
-// })
+window.addEventListener("keydown", function (e) {
+    // Position
+    console.log(camera.position)
+    if (camera.position.z > 0.8 && e.key === "ArrowUp") {
+        camera.position.z += -0.1
+    }
+    if (camera.position.z < 2.3 && e.key === "ArrowDown") {
+        camera.position.z += 0.1
+    }
+    if (camera.position.x <= 4.2 && camera.position.x >= 0.10 && e.key === "ArrowLeft") {
+        camera.position.x += -0.1
+    }
+    if (camera.position.x >= -0.10 && camera.position.x < 4 && e.key === "ArrowRight") {
+        camera.position.x += 0.1
+    }
+    // Rotation
+    console.log(camera.rotation)
+    if (camera.rotation.x < 0.2 && e.key === "Shift") {
+        camera.rotation.x += 0.1
+    }
+    if (camera.rotation.x > -0.4 && e.key === "Control") {
+        camera.rotation.x += -0.1
+    }
+})
 
 /** 3D MODELS */
 // loading
@@ -132,6 +132,8 @@ gltfLamp = await gltfLoader.loadAsync("3dModels/lamp/lamp.gltf")
 // door
 let gltfDoor = null;
 gltfDoor = await gltfLoader.loadAsync("3dModels/door/door.gltf")
+let gltfPoster = null;
+gltfPoster = await gltfLoader.loadAsync("3dModels/poster/poster.gltf")
 
 
 // adding 3d models to scene
@@ -151,6 +153,7 @@ objs.push(gltfDesk)
 objs.push(gltfComputer)
 objs.push(gltfLamp)
 objs.push(gltfDoor)
+objs.push(gltfPoster)
 
 addAndRun(objs)
 async function addAndRun(loadedObjsArray) {
@@ -199,7 +202,7 @@ async function addAndRun(loadedObjsArray) {
     // trans flag
     let transFlagModel = loadedObjsArray[10].scene.children[0]
     scene.add(transFlagModel)
-    transFlagModel.position.set(0, 1, -1)
+    transFlagModel.position.set(0, 1.2, -1)
     transFlagModel.scale.set(.7, .7, .7)
 
     // desk
@@ -211,7 +214,7 @@ async function addAndRun(loadedObjsArray) {
     // computer
     let computerModel = loadedObjsArray[12].scene.children[0]
     scene.add(computerModel)
-    computerModel.position.set(1.9, 0.56, -.7)
+    computerModel.position.set(1.7, 0.56, -.7)
     computerModel.scale.set(0.7, 0.7, 0.7)
 
     // lamp
@@ -229,6 +232,13 @@ async function addAndRun(loadedObjsArray) {
     doorModelTwo.position.set(-1, 0, 1)
     doorModelTwo.rotation.set(0, Math.PI / 2, 0)
     doorModelTwo.scale.set(0.7, 0.7, 0.7)
+
+    // poster
+    let posterModel = loadedObjsArray[15].scene.children[0]
+    scene.add(posterModel)
+    posterModel.position.set(4.95, 0.9, 0.8)
+    posterModel.scale.set(0.8, 0.8, 0.8)
+    posterModel.rotation.set(0, - Math.PI / 2, 0)
 
     //mixers
     let mixer = new THREE.AnimationMixer(currentModel)
@@ -271,7 +281,6 @@ async function addAndRun(loadedObjsArray) {
             scene.add(currentStormModel)
             currentStormModel.scale.set(0.6, 0.6, 0.6)
             currentStormModel.position.set(2, .1, 0)
-
         }
         previousTime = myTimer
 
@@ -282,9 +291,12 @@ async function addAndRun(loadedObjsArray) {
             const intersectsInstagram = raycaster.intersectObject(instagramModel)
             const intersectsGoogleForms = raycaster.intersectObject(googleFormsModel)
             const intersectsPhantomNounoune = raycaster.intersectObject(phantomMesh)
+            const intersectsFlag = raycaster.intersectObject(transFlagModel)
+            const intersectsComputer = raycaster.intersectObject(computerModel)
+            const intersectsPoster = raycaster.intersectObject(posterModel)
 
             // cursor changes
-            if (intersectsPhantomNounoune[0] || intersectsInstagram[0] || intersectsGoogleForms[0]
+            if (intersectsPhantomNounoune[0] || intersectsInstagram[0] || intersectsGoogleForms[0] || intersectsFlag[0] || intersectsComputer[0] || intersectsPoster[0]
             ) { document.body.style.cursor = "pointer" }
             else { document.body.style.cursor = "auto" }
 
@@ -298,7 +310,6 @@ async function addAndRun(loadedObjsArray) {
             else {
                 rotatingModel()
                 instagramModel.scale.set(0.035, 0.09, 0.035)
-
             }
             // google forms
             if (intersectsGoogleForms[0]) {
@@ -311,6 +322,7 @@ async function addAndRun(loadedObjsArray) {
                 rotatingModel()
                 googleFormsModel.scale.set(0.2, 0.2, 0.2)
             }
+            // phantom nounoune
             if (intersectsPhantomNounoune[0]) {
                 // console.log("intersecting")
                 currentModel.scale.set(0.6, 0.6, 0.6)
@@ -321,6 +333,29 @@ async function addAndRun(loadedObjsArray) {
                 currentModel.rotation.z += 0.01
 
             }
+            // flag
+            if (intersectsFlag[0]) {
+                transFlagModel.scale.set(0.73, 0.73, 0.73)
+            }
+            else {
+                transFlagModel.scale.set(0.70, 0.70, 0.70)
+            }
+            // computer
+            if (intersectsComputer[0]) {
+                computerModel.scale.set(0.73, 0.73, 0.73)
+            }
+            else {
+                computerModel.scale.set(0.70, 0.70, 0.70)
+            }
+            //poster
+            if (intersectsPoster[0]) {
+                posterModel.scale.set(0.83, 0.83, 0.83)
+            }
+            else {
+                posterModel.scale.set(0.8, 0.8, 0.8)
+            }
+
+
         }
 
         function rotatingModel() {
@@ -334,16 +369,34 @@ async function addAndRun(loadedObjsArray) {
             const intersects = raycaster.intersectObject(currentModel)
             const intersectsInstagram = raycaster.intersectObject(instagramModel)
             const intersectsGoogleForms = raycaster.intersectObject(googleFormsModel)
+            const intersectsTransFlag = raycaster.intersectObject(transFlagModel)
+            const intersectsComputer = raycaster.intersectObject(computerModel)
+            const intersectsPoster = raycaster.intersectObject(posterModel)
 
             if (intersectsInstagram[0]) {
                 // console.log('instagram clicked')
                 window.open('https://www.instagram.com/simulatorxr/');
             }
 
+            if (intersectsTransFlag[0]) {
+                window.open('https://aideauxtrans.com/fr');
+            }
+
             if (intersectsGoogleForms[0]) {
                 // console.log('google forms clicked')
                 window.open('https://docs.google.com/forms/d/e/1FAIpQLSfmegoERabwSOiWI4SYLfRCDdK-O-TT5tOWlZzADOjb8JYFaw/viewform?usp=sharing&ouid=108949411424619377579');
             }
+
+            if (intersectsComputer[0]) {
+                // console.log('google forms clicked')
+                window.open('https://pmc.ncbi.nlm.nih.gov/articles/PMC7699515/');
+            }
+
+            if (intersectsPoster[0]) {
+                // console.log('google forms clicked')
+                window.open('https://www.gendergp.com/wp-content/uploads/HRT-Timeline-Infographic-Female-to-Male-Testosterone-1920x1600.webp');
+            }
+
 
             if (intersects[0] !== undefined) {
                 currentIntersectedObj = intersects[0]
@@ -484,9 +537,6 @@ async function addAndRun(loadedObjsArray) {
     podium3.position.y = 0.05
     podium3.position.x = 4
 
-
-
-
     // LIGHTING
     const spotLight = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.15, 0.25, 1);
     spotLight.position.set(0, 2, 1)
@@ -537,6 +587,13 @@ async function addAndRun(loadedObjsArray) {
     const spotLightHelper7 = new THREE.SpotLightHelper(spotLight7);
     scene.add(spotLightHelper7);
 
+    const spotLight8 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.09, 0.25, 1);
+    spotLight8.position.set(4.5, 2, 2)
+    scene.add(spotLight8)
+    spotLight8.target = posterModel
+    const spotLightHelper8 = new THREE.SpotLightHelper(spotLight8);
+    scene.add(spotLightHelper8);
+
     const HemisphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
     scene.add(HemisphereLight);
     const HemisphereLightHelper = new THREE.HemisphereLightHelper(HemisphereLight, 5);
@@ -547,8 +604,9 @@ async function addAndRun(loadedObjsArray) {
 
 const mouse = new THREE.Vector2();
 window.addEventListener("mousemove", function (event) {
-    mouse.x = (event.clientX / sizes.width) * 2 - 1; //map to between -1,1
-    mouse.y = -(event.clientY / sizes.height) * 2 + 1; //map to between -1,1
+    const rect = canvas.getBoundingClientRect()
+    mouse.x = ((event.clientX - rect.left) / sizes.width) * 2 - 1;
+    mouse.y = -((event.clientY - rect.top) / sizes.height) * 2 + 1;
 });
 
 window.addEventListener("click", function (event) {

@@ -18,19 +18,18 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"s4studio_mesh_1"
+			"name":"s4studio_mesh_0"
 		}
 	],
 	"materials":[
 		{
-			"alphaMode":"BLEND",
 			"doubleSided":true,
 			"extensions":{
 				"KHR_materials_specular":{
 					"specularFactor":0
 				}
 			},
-			"name":"DIFFUSE.001",
+			"name":"DIFFUSE",
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
 					"index":0
@@ -42,18 +41,16 @@
 	],
 	"meshes":[
 		{
-			"name":"s4studio_mesh_1",
+			"name":"s4studio_mesh_0",
 			"primitives":[
 				{
 					"attributes":{
 						"POSITION":0,
 						"NORMAL":1,
 						"TEXCOORD_0":2,
-						"TEXCOORD_1":3,
-						"COLOR_0":4,
-						"COLOR_1":5
+						"TEXCOORD_1":3
 					},
-					"indices":6,
+					"indices":4,
 					"material":0
 				}
 			]
@@ -68,107 +65,81 @@
 	"images":[
 		{
 			"mimeType":"image/png",
-			"name":"1",
-			"uri":"1.png"
+			"name":"0",
+			"uri":"0.png"
 		}
 	],
 	"accessors":[
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":428,
+			"count":244,
 			"max":[
-				0.2537386417388916,
-				1.7501068115234375,
-				0.2537387013435364
+				0.2923367917537689,
+				0.7491989135742188,
+				0.06942963600158691
 			],
 			"min":[
-				-0.2537386417388916,
-				-5.981867445825628e-09,
-				-0.2537385821342468
+				-0.2923367917537689,
+				-4.268820574804266e-10,
+				0.00595110934227705
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":428,
+			"count":244,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":428,
+			"count":244,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5126,
-			"count":428,
+			"count":244,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":4,
-			"componentType":5121,
-			"count":428,
-			"normalized":true,
-			"type":"VEC4"
-		},
-		{
-			"bufferView":5,
 			"componentType":5123,
-			"count":428,
-			"normalized":true,
-			"type":"VEC4"
-		},
-		{
-			"bufferView":6,
-			"componentType":5123,
-			"count":963,
+			"count":450,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":5136,
+			"byteLength":2928,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":5136,
-			"byteOffset":5136,
+			"byteLength":2928,
+			"byteOffset":2928,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":3424,
-			"byteOffset":10272,
+			"byteLength":1952,
+			"byteOffset":5856,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":3424,
-			"byteOffset":13696,
+			"byteLength":1952,
+			"byteOffset":7808,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1712,
-			"byteOffset":17120,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":3424,
-			"byteOffset":18832,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":1926,
-			"byteOffset":22256,
+			"byteLength":900,
+			"byteOffset":9760,
 			"target":34963
 		}
 	],
@@ -180,8 +151,8 @@
 	],
 	"buffers":[
 		{
-			"byteLength":24184,
-			"uri":"lamp.bin"
+			"byteLength":10660,
+			"uri":"poster.bin"
 		}
 	]
 }

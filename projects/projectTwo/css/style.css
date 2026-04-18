@@ -1,0 +1,19 @@
+@font-face {
+    font-family: nintendoFont;
+    /* set name */
+    src: url(../fonts/Nintendo-DS-BIOS.ttf);
+    /* url of the font */
+}
+
+body {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: #000000;
+    opacity: 1;
+    font-family: 'nintendoFont', sans-serif;
+    font-size: 30px;
+}

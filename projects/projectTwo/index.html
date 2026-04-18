@@ -2,14 +2,15 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+
     <title>Nou Noune's Project Two</title>
-    <style>
-        body {
-            margin: 0;
-        }
-    </style>
-    <!-- This import map tells the browser WHERE to find Three.js -->
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+    <!--Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script type="importmap">
     {
       "imports": {
@@ -21,9 +22,17 @@
     <script type="module" src="projectTwo.js"></script>
 </head>
 
+
 <body>
-    <!-- This is the canvas where Three.js will draw everything -->
-    <canvas></canvas>
+    <div style="display:flex; flex-direction:column; align-items:center;">
+
+        <p>welcome</p>
+        <canvas></canvas>
+        <p>move left, right, up and down with arrows<br>
+            use shift to pan up, use control to pan down<br>
+            hover over and click on certain objects
+        </p>
+    </div>
 </body>
 
 </html>
