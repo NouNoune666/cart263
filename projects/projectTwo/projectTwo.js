@@ -5,8 +5,11 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 
+// let audio = new Audio('audio/cas_music_sims.wav')
+// audio.play();
+// console.log(audio)
+
 const scene = new THREE.Scene()
-console.log(scene)
 // nou noune interaction
 const raycaster = new THREE.Raycaster()
 
@@ -33,11 +36,23 @@ camera.position.x = 2
 // camera.rotation.y = Math.PI / 2
 scene.add(camera)
 
-console.log(camera.position)
+// console.log(camera.position)
 /** AXES HELPER */
 // Shows colored axes: X = red, Y = green, Z = blue
 const axesHelper = new THREE.AxesHelper(3)
 scene.add(axesHelper)
+
+
+const listener = new THREE.AudioListener();
+camera.add(listener);
+const sound = new THREE.Audio(listener);
+const audioLoader = new THREE.AudioLoader();
+audioLoader.load('audio/cas_music_sims.wav', function (buffer) {
+    sound.setBuffer(buffer);
+    sound.setLoop(true);
+    sound.setVolume(0.2);
+
+});
 
 /** RENDERING */
 const canvas = document.querySelector('canvas')
@@ -47,29 +62,32 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 
 /** CONTROLS */
-// const controls = new OrbitControls(camera, canvas)
-// controls.enableRotate = false
-// controls.enableZoom = false
-// controls.enablePan = false
+const controls = new OrbitControls(camera, canvas)
 
-window.addEventListener("keydown", function (e) {
-    console.log(camera.position)
-    if (camera.position.z < 2.4 && e.key === "ArrowUp")
-        camera.position.z += -0.1
-
-    if (camera.position.z > 0.69 && e.key === "ArrowDown")
-        camera.position.z += 0.1
-
-    if (camera.position.x > -0.1 && e.key === "ArrowLeft")
-        camera.position.x += -0.1
-
-    if (camera.position.x < 4.1 && e.key === "ArrowRight")
-        camera.position.x += 0.1
-})
-
-
-
-
+// window.addEventListener("keydown", function (e) {
+//     // Position
+//     console.log(camera.position)
+//     if (camera.position.z > 0.8 && e.key === "ArrowUp") {
+//         camera.position.z += -0.1
+//     }
+//     if (camera.position.z < 2.3 && e.key === "ArrowDown") {
+//         camera.position.z += 0.1
+//     }
+//     if (camera.position.x <= 4.2 && camera.position.x >= 0.10 && e.key === "ArrowLeft") {
+//         camera.position.x += -0.1
+//     }
+//     if (camera.position.x >= -0.10 && camera.position.x < 4 && e.key === "ArrowRight") {
+//         camera.position.x += 0.1
+//     }
+//     // Rotation
+//     // console.log(camera.rotation)
+//     if (camera.rotation.x < 0.2 && e.key === "Shift") {
+//         camera.rotation.x += 0.1
+//     }
+//     if (camera.rotation.x > -0.4 && e.key === "Control") {
+//         camera.rotation.x += -0.1
+//     }
+// })
 
 /** 3D MODELS */
 // loading
@@ -99,6 +117,21 @@ gltfInstagram = await gltfLoader.loadAsync("3dModels/instagram/instagram.gltf")
 // google forms
 let gltfgoogleForms = null;
 gltfgoogleForms = await gltfLoader.loadAsync("3dModels/googleForms/googleForms.gltf")
+// trans flag
+let gltfTransFlag = null;
+gltfTransFlag = await gltfLoader.loadAsync("3dModels/transFlag/transflag.gltf")
+// desk
+let gltfDesk = null;
+gltfDesk = await gltfLoader.loadAsync("3dModels/desk/desk.gltf")
+// desk
+let gltfComputer = null;
+gltfComputer = await gltfLoader.loadAsync("3dModels/computer/computer.gltf")
+// lamp
+let gltfLamp = null;
+gltfLamp = await gltfLoader.loadAsync("3dModels/lamp/lamp.gltf")
+// door
+let gltfDoor = null;
+gltfDoor = await gltfLoader.loadAsync("3dModels/door/door.gltf")
 
 
 // adding 3d models to scene
@@ -113,8 +146,11 @@ objs.push(gltfStormNoune5)
 objs.push(gltfDudeNoune)
 objs.push(gltfInstagram)
 objs.push(gltfgoogleForms)
-
-
+objs.push(gltfTransFlag)
+objs.push(gltfDesk)
+objs.push(gltfComputer)
+objs.push(gltfLamp)
+objs.push(gltfDoor)
 
 addAndRun(objs)
 async function addAndRun(loadedObjsArray) {
@@ -126,33 +162,31 @@ async function addAndRun(loadedObjsArray) {
     const phantomGeometry = new THREE.BoxGeometry()
     const phantomMesh = new THREE.Mesh(phantomGeometry, phantomMaterial)
     scene.add(phantomMesh)
-    phantomMesh.position.set(0, 0.5, 0)
-    phantomMesh.scale.set(0.25, 1, 0.22)
+    phantomMesh.position.set(0, 0.55, 0)
+    phantomMesh.scale.set(0.25, 1.1, 0.22)
     phantomMesh.material.transparent = true //enables opacity
-    phantomMesh.material.opacity = 0
-
-
+    phantomMesh.material.opacity = .0
+    console.log(currentModel)
     // dude noune
     let dudeNouneModel = loadedObjsArray[7].scene.children[0]
     scene.add(dudeNouneModel)
-    dudeNouneModel.scale.set(.5, .5, .5)
-    dudeNouneModel.position.set(4, 0, 0)
+    dudeNouneModel.scale.set(.6, .6, .6)
+    dudeNouneModel.position.set(4, .1, -.1)
 
     // storm noune
     currentStormModel = SkeletonUtils.clone(loadedObjsArray[2].scene.children[0])
     // let stormNoune1Model = loadedObjsArray[2].scene.children[0]
     scene.add(currentStormModel)
-    currentStormModel.scale.set(0.55, 0.55, 0.55)
-    currentStormModel.position.set(2, 0, 0)
+    currentStormModel.scale.set(0.6, 0.6, 0.6)
+    currentStormModel.position.set(2, 0.1, 0)
 
     // instagram
     let instagramModel = loadedObjsArray[8].scene.children[0]
     scene.add(instagramModel)
-    instagramModel.scale.set(0.035, 0.035, 0.035)
+    instagramModel.scale.set(0.035, 0.09, 0.035)
     instagramModel.position.set(1, 1, 0)
     instagramModel.rotation.set(Math.PI / 2, 0, 0)
     instagramModel.material.transparent = true //enables opacity
-
 
     // google forms
     let googleFormsModel = loadedObjsArray[9].scene.children[0]
@@ -162,6 +196,40 @@ async function addAndRun(loadedObjsArray) {
     googleFormsModel.rotation.set(0, - Math.PI / 2, 0)
     googleFormsModel.material.transparent = true //enables opacity
 
+    // trans flag
+    let transFlagModel = loadedObjsArray[10].scene.children[0]
+    scene.add(transFlagModel)
+    transFlagModel.position.set(0, 1, -1)
+    transFlagModel.scale.set(.7, .7, .7)
+
+    // desk
+    let deskModel = loadedObjsArray[11].scene.children[0]
+    scene.add(deskModel)
+    deskModel.position.set(2, 0, -.7)
+    deskModel.scale.set(0.7, 0.7, 0.7)
+
+    // computer
+    let computerModel = loadedObjsArray[12].scene.children[0]
+    scene.add(computerModel)
+    computerModel.position.set(1.9, 0.56, -.7)
+    computerModel.scale.set(0.7, 0.7, 0.7)
+
+    // lamp
+    let lampModel = loadedObjsArray[13].scene.children[0]
+    scene.add(lampModel)
+    lampModel.position.set(4.5, 0, -.6)
+    lampModel.scale.set(0.7, 0.7, 0.7)
+
+    // door
+    let doorModel = loadedObjsArray[14].scene.children[0]
+    let doorModelTwo = SkeletonUtils.clone(loadedObjsArray[14].scene.children[0])
+    scene.add(doorModel, doorModelTwo)
+    doorModel.position.set(4, 0, -1)
+    doorModel.scale.set(0.7, 0.7, 0.7)
+    doorModelTwo.position.set(-1, 0, 1)
+    doorModelTwo.rotation.set(0, Math.PI / 2, 0)
+    doorModelTwo.scale.set(0.7, 0.7, 0.7)
+
     //mixers
     let mixer = new THREE.AnimationMixer(currentModel)
     let mixerTwo = new THREE.AnimationMixer(dudeNouneModel)
@@ -170,7 +238,7 @@ async function addAndRun(loadedObjsArray) {
     let clip = loadedObjsArray[0].animations[2];
     let anim_action = mixer.clipAction(clip);
     anim_action.play()
-    // animation nou noune
+    // animation dude noune
     let clipTwo = loadedObjsArray[7].animations[0];
     let anim_action_two = mixerTwo.clipAction(clipTwo);
     anim_action_two.play()
@@ -188,7 +256,6 @@ async function addAndRun(loadedObjsArray) {
         // controls stuff
         // controls.update();
 
-
         // Storm Noune changing poses
         let myTimer = Math.ceil((timer / 1000))
         // console.log(myTimer)
@@ -202,13 +269,15 @@ async function addAndRun(loadedObjsArray) {
             scene.remove(currentStormModel)
             currentStormModel = SkeletonUtils.clone(loadedObjsArray[index].scene.children[0])
             scene.add(currentStormModel)
-            currentStormModel.scale.set(.55, .55, .55)
-            currentStormModel.position.set(2, 0, 0)
+            currentStormModel.scale.set(0.6, 0.6, 0.6)
+            currentStormModel.position.set(2, .1, 0)
+
         }
         previousTime = myTimer
 
         // hovering events
         if (mouseIsOver) {
+            sound.play();
             raycaster.setFromCamera(mouse, camera);
             const intersectsInstagram = raycaster.intersectObject(instagramModel)
             const intersectsGoogleForms = raycaster.intersectObject(googleFormsModel)
@@ -221,31 +290,37 @@ async function addAndRun(loadedObjsArray) {
 
             // instagram
             if (intersectsInstagram[0]) {
-                instagramModel.position.set(1, 1, 0)
-                instagramModel.rotation.set(Math.PI / 2, 0, 0)
+                // instagramModel.position.set(1, 1, 0)
+                // instagramModel.rotation.set(Math.PI / 2, 0, 0)
+                instagramModel.scale.set(0.038, 0.093, 0.038)
+
             }
             else {
                 rotatingModel()
+                instagramModel.scale.set(0.035, 0.09, 0.035)
+
             }
             // google forms
             if (intersectsGoogleForms[0]) {
                 // console.log('over instagram')
-                googleFormsModel.scale.set(0.25, 0.25, 0.25)
-                googleFormsModel.position.set(3, 1, 0)
-                googleFormsModel.rotation.set(0, - Math.PI / 2, 0)
+                googleFormsModel.scale.set(0.23, 0.23, 0.23)
+                // googleFormsModel.position.set(3, 1, 0)
+                // googleFormsModel.rotation.set(0, - Math.PI / 2, 0)
             }
             else {
                 rotatingModel()
+                googleFormsModel.scale.set(0.2, 0.2, 0.2)
             }
             if (intersectsPhantomNounoune[0]) {
-                console.log("intersecting")
-                currentModel.scale.set(.55, .55, .55)
-
+                // console.log("intersecting")
+                currentModel.scale.set(0.6, 0.6, 0.6)
+                // currentModel.rotation.y = 0
+                // console.log(currentModel)
             }
             else {
-                currentModel.rotation.z += 0.007
-            }
+                currentModel.rotation.z += 0.01
 
+            }
         }
 
         function rotatingModel() {
@@ -261,15 +336,14 @@ async function addAndRun(loadedObjsArray) {
             const intersectsGoogleForms = raycaster.intersectObject(googleFormsModel)
 
             if (intersectsInstagram[0]) {
-                console.log('instagram clicked')
+                // console.log('instagram clicked')
                 window.open('https://www.instagram.com/simulatorxr/');
             }
 
             if (intersectsGoogleForms[0]) {
-                console.log('google forms clicked')
+                // console.log('google forms clicked')
                 window.open('https://docs.google.com/forms/d/e/1FAIpQLSfmegoERabwSOiWI4SYLfRCDdK-O-TT5tOWlZzADOjb8JYFaw/viewform?usp=sharing&ouid=108949411424619377579');
             }
-
 
             if (intersects[0] !== undefined) {
                 currentIntersectedObj = intersects[0]
@@ -280,27 +354,31 @@ async function addAndRun(loadedObjsArray) {
                     scene.remove(currentModel)
                     currentModel = SkeletonUtils.clone(loadedObjsArray[1].scene.children[0])
                     scene.add(currentModel)
-                    currentModel.scale.set(.55, .55, .55)
+                    currentModel.scale.set(0.6, 0.6, 0.6)
+                    currentModel.position.set(0, .1, 0)
                     firstNounoune = false
                     mixer.stopAllAction()
                     mixer = new THREE.AnimationMixer(currentModel)
-                    clip = loadedObjsArray[1].animations[2];
+                    clip = loadedObjsArray[0].animations[2];
+
                     anim_action = mixer.clipAction(clip);
                     anim_action.play()
+                    console.log(currentModel)
                 }
                 else {
                     scene.remove(currentModel)
                     currentModel = SkeletonUtils.clone(loadedObjsArray[0].scene.children[0])
                     scene.add(currentModel)
-                    currentModel.scale.set(.55, .55, .55)
+                    currentModel.scale.set(0.6, 0.6, 0.6)
+                    currentModel.position.set(0, .1, 0)
                     firstNounoune = true
                     mixer.stopAllAction()
                     mixer = new THREE.AnimationMixer(currentModel)
                     clip = loadedObjsArray[0].animations[2];
                     anim_action = mixer.clipAction(clip);
                     anim_action.play()
-                    // console.log(anim_action)
-                    // console.log(clip)
+
+                    console.log(currentModel)
                 }
             }
             mouseWasClicked = false;
@@ -316,11 +394,25 @@ async function addAndRun(loadedObjsArray) {
         window.requestAnimationFrame(animate);
     }
     // nou noune
-    currentModel.scale.set(.55, .55, .55)
+    currentModel.scale.set(0.6, 0.6, 0.6)
+    currentModel.position.set(0, .1, 0)
+
 
     /** MESHES */
     const loader = new THREE.TextureLoader();
-    const planeGeometry = new THREE.PlaneGeometry(2, 2)
+    // common geometry
+    const wallGeometry = new THREE.PlaneGeometry(2, 2)
+    const floorGeometry = new THREE.PlaneGeometry(2, 3)
+    const sideWallGeometry = new THREE.PlaneGeometry(3, 2)
+    // ceiling 
+    const ceilingGeometry = new THREE.PlaneGeometry(3, 6)
+    const ceiling_texture = await loader.loadAsync('textures/ceiling.png')
+    ceiling_texture.colorSpace = THREE.SRGBColorSpace;
+    const ceilingMaterial = new THREE.MeshBasicMaterial({ map: ceiling_texture, side: THREE.DoubleSide })
+    const ceiling = new THREE.Mesh(ceilingGeometry, ceilingMaterial)
+    scene.add(ceiling)
+    ceiling.rotation.set(Math.PI / 2, 0, Math.PI / 2)
+    ceiling.position.set(2, 2, 0.5)
     // room one
     const walls1_texture = await loader.loadAsync('textures/walls1.png')
     walls1_texture.colorSpace = THREE.SRGBColorSpace;
@@ -328,16 +420,18 @@ async function addAndRun(loadedObjsArray) {
     floor1_texture.colorSpace = THREE.SRGBColorSpace;
     const floor1Material = new THREE.MeshBasicMaterial({ map: floor1_texture, side: THREE.DoubleSide })
     const walls1Material = new THREE.MeshBasicMaterial({ map: walls1_texture, side: THREE.DoubleSide })
-    const floor = new THREE.Mesh(planeGeometry, floor1Material)
-    const wall1 = new THREE.Mesh(planeGeometry, walls1Material)
-    const wall2 = new THREE.Mesh(planeGeometry, walls1Material)
+    const floor = new THREE.Mesh(floorGeometry, floor1Material)
+    const wall1 = new THREE.Mesh(wallGeometry, walls1Material)
+    const wall2 = new THREE.Mesh(sideWallGeometry, walls1Material)
     scene.add(floor, wall1, wall2)
     floor.rotation.x = -Math.PI * 0.5
+    floor.position.z = 0.5
     wall1.position.z = -1
     wall1.position.y = 1
     wall2.rotation.y = -Math.PI * 0.5
     wall2.position.x = -1
     wall2.position.y = 1
+    wall2.position.z = 0.5
     // room two
     const walls2_texture = await loader.loadAsync('textures/walls2.png')
     walls2_texture.colorSpace = THREE.SRGBColorSpace;
@@ -345,11 +439,12 @@ async function addAndRun(loadedObjsArray) {
     floor2_texture.colorSpace = THREE.SRGBColorSpace;
     const floor2Material = new THREE.MeshBasicMaterial({ map: floor2_texture, side: THREE.DoubleSide })
     const walls2Material = new THREE.MeshBasicMaterial({ map: walls2_texture, side: THREE.DoubleSide })
-    const floor2 = new THREE.Mesh(planeGeometry, floor2Material)
-    const wall3 = new THREE.Mesh(planeGeometry, walls2Material)
+    const floor2 = new THREE.Mesh(floorGeometry, floor2Material)
+    const wall3 = new THREE.Mesh(wallGeometry, walls2Material)
     scene.add(floor2, wall3)
     floor2.rotation.x = -Math.PI * 0.5
     floor2.position.x = 2
+    floor2.position.z = 0.5
     wall3.position.z = -1
     wall3.position.y = 1
     wall3.position.x = 2
@@ -360,38 +455,57 @@ async function addAndRun(loadedObjsArray) {
     floor3_texture.colorSpace = THREE.SRGBColorSpace;
     const floor3Material = new THREE.MeshBasicMaterial({ map: floor3_texture, side: THREE.DoubleSide })
     const walls3Material = new THREE.MeshBasicMaterial({ map: walls3_texture, side: THREE.DoubleSide })
-    const floor3 = new THREE.Mesh(planeGeometry, floor3Material)
-    const wall4 = new THREE.Mesh(planeGeometry, walls3Material)
-    const wall5 = new THREE.Mesh(planeGeometry, walls3Material)
+    const floor3 = new THREE.Mesh(floorGeometry, floor3Material)
+    const wall4 = new THREE.Mesh(wallGeometry, walls3Material)
+    const wall5 = new THREE.Mesh(sideWallGeometry, walls3Material)
     scene.add(floor3, wall4, wall5)
     floor3.rotation.x = -Math.PI * 0.5
     floor3.position.x = 4
+    floor3.position.z = 0.5
     wall4.position.z = -1
     wall4.position.y = 1
     wall4.position.x = 4
     wall5.rotation.y = -Math.PI * 0.5
     wall5.position.x = 5
     wall5.position.y = 1
+    wall5.position.z = 0.5
+    // podium
+    const podiumGeometry = new THREE.CylinderGeometry(0.4, 0.4, 0.1, 32);
+    const podium_texture = await loader.loadAsync('textures/podium.png')
+    podium_texture.colorSpace = THREE.SRGBColorSpace;
+    const podiumMaterial = new THREE.MeshBasicMaterial({ map: podium_texture, side: THREE.DoubleSide });
+    const podium = new THREE.Mesh(podiumGeometry, podiumMaterial);
+    const podium2 = new THREE.Mesh(podiumGeometry, podiumMaterial);
+    const podium3 = new THREE.Mesh(podiumGeometry, podiumMaterial);
+    scene.add(podium, podium2, podium3);
+    podium.position.y = 0.05
+    podium2.position.y = 0.05
+    podium2.position.x = 2
+    podium3.position.y = 0.05
+    podium3.position.x = 4
+
+
+
 
     // LIGHTING
     const spotLight = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.15, 0.25, 1);
     spotLight.position.set(0, 2, 1)
     scene.add(spotLight)
-    spotLight.target = floor
+    spotLight.target = phantomMesh
     const spotLightHelper = new THREE.SpotLightHelper(spotLight);
     scene.add(spotLightHelper);
 
     const spotLight2 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.15, 0.25, 1);
     spotLight2.position.set(2, 2, 1)
     scene.add(spotLight2)
-    spotLight2.target = floor2
+    spotLight2.target = currentStormModel
     const spotLightHelper2 = new THREE.SpotLightHelper(spotLight2);
     scene.add(spotLightHelper2);
 
     const spotLight3 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.15, 0.25, 1);
     spotLight3.position.set(4, 2, 1)
     scene.add(spotLight3)
-    spotLight3.target = floor3
+    spotLight3.target = dudeNouneModel
     const spotLightHelper3 = new THREE.SpotLightHelper(spotLight3);
     scene.add(spotLightHelper3);
 
@@ -409,10 +523,26 @@ async function addAndRun(loadedObjsArray) {
     const spotLightHelper5 = new THREE.SpotLightHelper(spotLight5);
     scene.add(spotLightHelper5);
 
+    const spotLight6 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.09, 0.25, 1);
+    spotLight6.position.set(0, 2, 0)
+    scene.add(spotLight6)
+    spotLight6.target = transFlagModel
+    const spotLightHelper6 = new THREE.SpotLightHelper(spotLight6);
+    scene.add(spotLightHelper6);
+
+    const spotLight7 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.09, 0.25, 1);
+    spotLight7.position.set(4.5, 2, 0)
+    scene.add(spotLight7)
+    spotLight7.target = lampModel
+    const spotLightHelper7 = new THREE.SpotLightHelper(spotLight7);
+    scene.add(spotLightHelper7);
+
     const HemisphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
     scene.add(HemisphereLight);
     const HemisphereLightHelper = new THREE.HemisphereLightHelper(HemisphereLight, 5);
     scene.add(HemisphereLightHelper);
+
+
 }
 
 const mouse = new THREE.Vector2();
