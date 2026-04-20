@@ -3,12 +3,10 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
-import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
-// import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-// import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { Avatar } from './Avatar.js';
 
-// let audio = new Audio('audio/cas_music_sims.wav')
-// audio.play();
+let audio = new Audio('audio/cas_music_sims.wav')
+audio.play();
 // console.log(audio)
 
 const scene = new THREE.Scene()
@@ -18,16 +16,16 @@ const raycaster = new THREE.Raycaster() // for avatar interaction
 let mouseWasClicked = false
 let mouseIsOver = true
 // nou noune
-let currentModel = null
-let firstNounoune = true;
+// let currentModel = null
+// let firstNounoune = true;
 let currentIntersectedObj = null;
 // storm noune
 let currentStormModel = null
 
 /** CAMERA */
 const sizes = {
-    width: 800,
-    height: 800
+    width: 600,
+    height: 600
 }
 const fov = 75
 const camera = new THREE.PerspectiveCamera(fov, sizes.width / sizes.height)
@@ -64,7 +62,6 @@ renderer.setSize(sizes.width, sizes.height)
 // controls with keys
 window.addEventListener("keydown", function (e) {
     // Position
-    console.log(camera.position)
     if (camera.position.z > 0.8 && e.key === "ArrowUp") {
         camera.position.z += -0.1
     }
@@ -78,7 +75,6 @@ window.addEventListener("keydown", function (e) {
         camera.position.x += 0.1
     }
     // Rotation
-    console.log(camera.rotation)
     if (camera.rotation.x < 0.2 && e.key === "Shift") {
         camera.rotation.x += 0.1
     }
@@ -91,10 +87,10 @@ window.addEventListener("keydown", function (e) {
 // loading
 const gltfLoader = new GLTFLoader();
 // Nou Noune
-let gltfNounoune1 = null;
-gltfNounoune1 = await gltfLoader.loadAsync("3dModels/nounoune/nounoune1.gltf")
-let gltfNounoune2 = null;
-gltfNounoune2 = await gltfLoader.loadAsync("3dModels/nounoune/nounoune2.gltf")
+let nounoune1 = new Avatar("3dModels/nounoune/nounoune1.gltf", "3dModels/nounoune/nounoune2.gltf", scene, .6, new THREE.Vector3(0, .1, 0), true);
+// gltfNounoune1 = await gltfLoader.loadAsync("3dModels/nounoune/nounoune1.gltf")
+// let gltfNounoune2 = null;
+// gltfNounoune2 = await gltfLoader.loadAsync("3dModels/nounoune/nounoune2.gltf")
 //Storm Noune
 let gltfStormNoune1 = null;
 gltfStormNoune1 = await gltfLoader.loadAsync("3dModels/stormNoune/stormNoune1.gltf")
@@ -135,8 +131,8 @@ gltfPoster = await gltfLoader.loadAsync("3dModels/poster/poster.gltf")
 
 // adding 3d models to scene
 let objs = []
-objs.push(gltfNounoune1)
-objs.push(gltfNounoune2)
+objs.push(null)
+objs.push(null)
 objs.push(gltfStormNoune1)
 objs.push(gltfStormNoune2)
 objs.push(gltfStormNoune3)
@@ -155,18 +151,18 @@ objs.push(gltfPoster)
 addAndRun(objs)
 async function addAndRun(loadedObjsArray) {
     // nou noune
-    currentModel = SkeletonUtils.clone(loadedObjsArray[0].scene.children[0])
-    scene.add(currentModel)
+    // currentModel = SkeletonUtils.clone(loadedObjsArray[0].scene.children[0])
+    // scene.add(currentModel)
     //phantom nou noune for cursor changes, just a simple 3d rectangle
     const phantomMaterial = new THREE.MeshBasicMaterial({ color: 0x800080 })
     const phantomGeometry = new THREE.BoxGeometry()
     const phantomMesh = new THREE.Mesh(phantomGeometry, phantomMaterial)
     scene.add(phantomMesh)
     phantomMesh.position.set(0, 0.55, 0)
-    phantomMesh.scale.set(0.25, 1.1, 0.22)
+    phantomMesh.scale.set(0.25, 1.2, 0.22)
     phantomMesh.material.transparent = true //enables opacity
-    phantomMesh.material.opacity = .0
-    console.log(currentModel)
+    phantomMesh.material.opacity = .3
+    // console.log(currentModel)
     // dude noune
     let dudeNouneModel = loadedObjsArray[7].scene.children[0]
     scene.add(dudeNouneModel)
@@ -239,13 +235,13 @@ async function addAndRun(loadedObjsArray) {
     posterModel.rotation.set(0, Math.PI / 2, 0)
 
     //mixers
-    let mixer = new THREE.AnimationMixer(currentModel)
+    // let mixer = new THREE.AnimationMixer(currentModel)
     let mixerTwo = new THREE.AnimationMixer(dudeNouneModel)
 
     // animation nou noune
-    let clip = loadedObjsArray[0].animations[2];
-    let anim_action = mixer.clipAction(clip);
-    anim_action.play()
+    // let clip = loadedObjsArray[0].animations[2];
+    // let anim_action = mixer.clipAction(clip);
+    // anim_action.play()
     // animation dude noune
     let clipTwo = loadedObjsArray[7].animations[0];
     let anim_action_two = mixerTwo.clipAction(clipTwo);
@@ -319,10 +315,11 @@ async function addAndRun(loadedObjsArray) {
             }
             // phantom nounoune
             if (intersectsPhantomNounoune[0]) {
-                currentModel.scale.set(0.6, 0.6, 0.6)
+                nounoune1.currentModel.scale.set(0.6, 0.6, 0.6)
             }
             else {
-                currentModel.rotation.z += 0.01
+                nounoune1.currentModel.rotation.z += 0.01
+                nounoune1.currentModel.scale.set(0.6, 0.6, 0.6)
             }
             // flag
             if (intersectsFlag[0]) {
@@ -355,7 +352,7 @@ async function addAndRun(loadedObjsArray) {
         // clicking events
         if (mouseWasClicked) {
             raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObject(currentModel)
+            const intersects = raycaster.intersectObject(nounoune1.currentModel)
             const intersectsInstagram = raycaster.intersectObject(instagramModel)
             const intersectsGoogleForms = raycaster.intersectObject(googleFormsModel)
             const intersectsTransFlag = raycaster.intersectObject(transFlagModel)
@@ -384,43 +381,46 @@ async function addAndRun(loadedObjsArray) {
             }
 
             // nou noune avatar clicking logic
+            console.log(intersects[0])
             if (intersects[0] !== undefined) {
                 currentIntersectedObj = intersects[0]
+                // console.log(currentIntersectedObj)
             }
             if (currentIntersectedObj !== null) {
                 // console.log(currentIntersectedObj)
-                if (firstNounoune) {
-                    scene.remove(currentModel)
-                    currentModel = SkeletonUtils.clone(loadedObjsArray[1].scene.children[0])
-                    scene.add(currentModel)
-                    currentModel.scale.set(0.6, 0.6, 0.6)
-                    currentModel.position.set(0, .1, 0)
-                    firstNounoune = false
-                    mixer.stopAllAction()
-                    mixer = new THREE.AnimationMixer(currentModel)
-                    clip = loadedObjsArray[0].animations[2];
-                    anim_action = mixer.clipAction(clip);
-                    anim_action.play()
-                }
-                else {
-                    scene.remove(currentModel)
-                    currentModel = SkeletonUtils.clone(loadedObjsArray[0].scene.children[0])
-                    scene.add(currentModel)
-                    currentModel.scale.set(0.6, 0.6, 0.6)
-                    currentModel.position.set(0, .1, 0)
-                    firstNounoune = true
-                    mixer.stopAllAction()
-                    mixer = new THREE.AnimationMixer(currentModel)
-                    clip = loadedObjsArray[0].animations[2];
-                    anim_action = mixer.clipAction(clip);
-                    anim_action.play()
-                }
+                // if (firstNounoune) {
+                //     scene.remove(currentModel)
+                //     currentModel = SkeletonUtils.clone(loadedObjsArray[1].scene.children[0])
+                //     scene.add(currentModel)
+                //     currentModel.scale.set(0.6, 0.6, 0.6)
+                //     currentModel.position.set(0, .1, 0)
+                //     firstNounoune = false
+                //     mixer.stopAllAction()
+                //     mixer = new THREE.AnimationMixer(currentModel)
+                //     clip = loadedObjsArray[0].animations[2];
+                //     anim_action = mixer.clipAction(clip);
+                //     anim_action.play()
+                // }
+                // else {
+                //     scene.remove(currentModel)
+                //     currentModel = SkeletonUtils.clone(loadedObjsArray[0].scene.children[0])
+                //     scene.add(currentModel)
+                //     currentModel.scale.set(0.6, 0.6, 0.6)
+                //     currentModel.position.set(0, .1, 0)
+                //     firstNounoune = true
+                //     mixer.stopAllAction()
+                //     mixer = new THREE.AnimationMixer(currentModel)
+                //     clip = loadedObjsArray[0].animations[2];
+                //     anim_action = mixer.clipAction(clip);
+                //     anim_action.play()
+                // }
+                nounoune1.switchModel(scene)
             }
             mouseWasClicked = false;
             currentIntersectedObj = null;
         }
-        if (mixer) {
-            mixer.update(deltaTime); // advance the animation by the time since last frame
+        if (nounoune1.mixer) {
+            nounoune1.mixer.update(deltaTime); // advance the animation by the time since last frame
         }
         if (mixerTwo) {
             mixerTwo.update(deltaTime); // advance the animation by the time since last frame
@@ -429,17 +429,18 @@ async function addAndRun(loadedObjsArray) {
         window.requestAnimationFrame(animate);
     }
     // nou noune
-    currentModel.scale.set(0.6, 0.6, 0.6)
-    currentModel.position.set(0, .1, 0)
+    // currentModel.scale.set(0.6, 0.6, 0.6)
+    // currentModel.position.set(0, .1, 0)
 
     /** MESHES */
     const loader = new THREE.TextureLoader();
-    // common geometry
+    //  geometry
     const wallGeometry = new THREE.PlaneGeometry(2, 2)
     const floorGeometry = new THREE.PlaneGeometry(2, 3)
     const sideWallGeometry = new THREE.PlaneGeometry(3, 2)
-    // ceiling 
     const ceilingGeometry = new THREE.PlaneGeometry(3, 6)
+
+    // ceiling 
     const ceiling_texture = await loader.loadAsync('textures/ceiling.png')
     ceiling_texture.colorSpace = THREE.SRGBColorSpace;
     const ceilingMaterial = new THREE.MeshBasicMaterial({ map: ceiling_texture, side: THREE.DoubleSide })
