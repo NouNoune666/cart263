@@ -4,18 +4,20 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+// import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+// import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
 // let audio = new Audio('audio/cas_music_sims.wav')
 // audio.play();
 // console.log(audio)
 
 const scene = new THREE.Scene()
-// nou noune interaction
-const raycaster = new THREE.Raycaster()
+const raycaster = new THREE.Raycaster() // for avatar interaction
 
+// for mouse events
 let mouseWasClicked = false
 let mouseIsOver = true
-// noun noune
+// nou noune
 let currentModel = null
 let firstNounoune = true;
 let currentIntersectedObj = null;
@@ -29,20 +31,17 @@ const sizes = {
 }
 const fov = 75
 const camera = new THREE.PerspectiveCamera(fov, sizes.width / sizes.height)
-
 camera.position.z = 2.3
 camera.position.y = 1
 camera.position.x = 2
-// camera.rotation.y = Math.PI / 2
 scene.add(camera)
 
-// console.log(camera.position)
 /** AXES HELPER */
 // Shows colored axes: X = red, Y = green, Z = blue
 // const axesHelper = new THREE.AxesHelper(3)
 // scene.add(axesHelper)
 
-
+/** MUSIC */
 const listener = new THREE.AudioListener();
 camera.add(listener);
 const sound = new THREE.Audio(listener);
@@ -51,7 +50,6 @@ audioLoader.load('audio/cas_music_sims.wav', function (buffer) {
     sound.setBuffer(buffer);
     sound.setLoop(true);
     sound.setVolume(0.2);
-
 });
 
 /** RENDERING */
@@ -63,7 +61,7 @@ renderer.setSize(sizes.width, sizes.height)
 
 /** CONTROLS */
 // const controls = new OrbitControls(camera, canvas)
-
+// controls with keys
 window.addEventListener("keydown", function (e) {
     // Position
     console.log(camera.position)
@@ -134,7 +132,6 @@ let gltfDoor = null;
 gltfDoor = await gltfLoader.loadAsync("3dModels/door/door.gltf")
 let gltfPoster = null;
 gltfPoster = await gltfLoader.loadAsync("3dModels/poster/poster.gltf")
-
 
 // adding 3d models to scene
 let objs = []
@@ -254,6 +251,8 @@ async function addAndRun(loadedObjsArray) {
     let anim_action_two = mixerTwo.clipAction(clipTwo);
     anim_action_two.play()
 
+
+    // for timer
     let elapsedTime = 0;
     let index = 2;
     let previousTime = 0;
@@ -264,8 +263,6 @@ async function addAndRun(loadedObjsArray) {
         // time stuff for clicking event
         let deltaTime = (timer - elapsedTime) / 1000; // convert ms to seconds
         elapsedTime = timer;
-        // controls stuff
-        // controls.update();
 
         // Storm Noune changing poses
         let myTimer = Math.ceil((timer / 1000))
@@ -303,8 +300,6 @@ async function addAndRun(loadedObjsArray) {
 
             // instagram
             if (intersectsInstagram[0]) {
-                // instagramModel.position.set(1, 1, 0)
-                // instagramModel.rotation.set(Math.PI / 2, 0, 0)
                 instagramModel.scale.set(0.038, 0.093, 0.038)
             }
             else {
@@ -324,10 +319,7 @@ async function addAndRun(loadedObjsArray) {
             }
             // phantom nounoune
             if (intersectsPhantomNounoune[0]) {
-                // console.log("intersecting")
                 currentModel.scale.set(0.6, 0.6, 0.6)
-                // currentModel.rotation.y = 0
-                // console.log(currentModel)
             }
             else {
                 currentModel.rotation.z += 0.01
@@ -370,30 +362,28 @@ async function addAndRun(loadedObjsArray) {
             const intersectsComputer = raycaster.intersectObject(computerModel)
             const intersectsPoster = raycaster.intersectObject(posterModel)
 
+            // opens websites
             if (intersectsInstagram[0]) {
                 // console.log('instagram clicked')
                 window.open('https://www.instagram.com/simulatorxr/');
             }
-
             if (intersectsTransFlag[0]) {
                 window.open('https://aideauxtrans.com/fr');
             }
-
             if (intersectsGoogleForms[0]) {
                 // console.log('google forms clicked')
                 window.open('https://docs.google.com/forms/d/e/1FAIpQLSfmegoERabwSOiWI4SYLfRCDdK-O-TT5tOWlZzADOjb8JYFaw/viewform?usp=sharing&ouid=108949411424619377579');
             }
-
             if (intersectsComputer[0]) {
                 // console.log('google forms clicked')
                 window.open('https://pmc.ncbi.nlm.nih.gov/articles/PMC7699515/');
             }
-
             if (intersectsPoster[0]) {
                 // console.log('google forms clicked')
                 window.open('https://www.gendergp.com/wp-content/uploads/HRT-Timeline-Infographic-Female-to-Male-Testosterone-1920x1600.webp');
             }
 
+            // nou noune avatar clicking logic
             if (intersects[0] !== undefined) {
                 currentIntersectedObj = intersects[0]
             }
@@ -409,10 +399,8 @@ async function addAndRun(loadedObjsArray) {
                     mixer.stopAllAction()
                     mixer = new THREE.AnimationMixer(currentModel)
                     clip = loadedObjsArray[0].animations[2];
-
                     anim_action = mixer.clipAction(clip);
                     anim_action.play()
-                    console.log(currentModel)
                 }
                 else {
                     scene.remove(currentModel)
@@ -426,8 +414,6 @@ async function addAndRun(loadedObjsArray) {
                     clip = loadedObjsArray[0].animations[2];
                     anim_action = mixer.clipAction(clip);
                     anim_action.play()
-
-                    console.log(currentModel)
                 }
             }
             mouseWasClicked = false;
@@ -445,7 +431,6 @@ async function addAndRun(loadedObjsArray) {
     // nou noune
     currentModel.scale.set(0.6, 0.6, 0.6)
     currentModel.position.set(0, .1, 0)
-
 
     /** MESHES */
     const loader = new THREE.TextureLoader();
@@ -596,6 +581,7 @@ async function addAndRun(loadedObjsArray) {
     // scene.add(HemisphereLightHelper);
 }
 
+/** Mouse tracking */
 const mouse = new THREE.Vector2();
 window.addEventListener("mousemove", function (event) {
     const rect = canvas.getBoundingClientRect()
@@ -603,11 +589,11 @@ window.addEventListener("mousemove", function (event) {
     mouse.y = -((event.clientY - rect.top) / sizes.height) * 2 + 1;
 });
 
+/** Event listeners */
 window.addEventListener("click", function (event) {
     // console.log("click")
     mouseWasClicked = true
 })
-
 window.addEventListener("mouseover", function (event) {
     // console.log("hey i am a mouse")
     mouseIsOver = true
