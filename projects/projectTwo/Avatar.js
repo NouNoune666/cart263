@@ -59,5 +59,4 @@ export class Avatar {
             this.anim_action.play()
         }
     }
-
 }

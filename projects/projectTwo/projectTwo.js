@@ -49,6 +49,7 @@ audioLoader.load('audio/cas_music_sims.wav', function (buffer) {
     sound.setLoop(true);
     sound.setVolume(0.2);
 });
+sound.play();
 
 /** RENDERING */
 const canvas = document.querySelector('canvas')
@@ -280,7 +281,6 @@ async function addAndRun(loadedObjsArray) {
 
         // hovering events
         if (mouseIsOver) {
-            sound.play();
             raycaster.setFromCamera(mouse, camera);
             const intersectsInstagram = raycaster.intersectObject(instagramModel)
             const intersectsGoogleForms = raycaster.intersectObject(googleFormsModel)
