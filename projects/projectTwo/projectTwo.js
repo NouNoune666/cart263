@@ -39,17 +39,17 @@ scene.add(camera)
 // const axesHelper = new THREE.AxesHelper(3)
 // scene.add(axesHelper)
 
-/** MUSIC */
-const listener = new THREE.AudioListener();
-camera.add(listener);
-const sound = new THREE.Audio(listener);
-const audioLoader = new THREE.AudioLoader();
-audioLoader.load('audio/cas_music_sims.wav', function (buffer) {
-    sound.setBuffer(buffer);
-    sound.setLoop(true);
-    sound.setVolume(0.2);
-});
-sound.play();
+// /** MUSIC */
+// const listener = new THREE.AudioListener();
+// camera.add(listener);
+// const sound = new THREE.Audio(listener);
+// const audioLoader = new THREE.AudioLoader();
+// audioLoader.load('audio/cas_music_sims.wav', function (buffer) {
+//     sound.setBuffer(buffer);
+//     sound.setLoop(true);
+//     sound.setVolume(0.2);
+// });
+// sound.play();
 
 /** RENDERING */
 const canvas = document.querySelector('canvas')
