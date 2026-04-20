@@ -6,8 +6,12 @@ import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
 import { Avatar } from './Avatar.js';
 
 let audio = new Audio('audio/cas_music_sims.wav')
+audio.loop = true
+audio.addEventListener('ended', function () {
+    audio.currentTime = 0
+    audio.play()
+})
 let soundStarted = false;
-// console.log(audio)
 
 const scene = new THREE.Scene()
 const raycaster = new THREE.Raycaster() // for avatar interaction
@@ -352,7 +356,7 @@ async function addAndRun(loadedObjsArray) {
         // clicking events
         if (mouseWasClicked) {
             if (soundStarted === false) {
-                audio.play();
+                audio.play()
                 soundStarted = true
             }
             raycaster.setFromCamera(mouse, camera);
