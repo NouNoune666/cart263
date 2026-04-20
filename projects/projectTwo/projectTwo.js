@@ -39,8 +39,8 @@ scene.add(camera)
 // console.log(camera.position)
 /** AXES HELPER */
 // Shows colored axes: X = red, Y = green, Z = blue
-const axesHelper = new THREE.AxesHelper(3)
-scene.add(axesHelper)
+// const axesHelper = new THREE.AxesHelper(3)
+// scene.add(axesHelper)
 
 
 const listener = new THREE.AudioListener();
@@ -202,43 +202,44 @@ async function addAndRun(loadedObjsArray) {
     // trans flag
     let transFlagModel = loadedObjsArray[10].scene.children[0]
     scene.add(transFlagModel)
-    transFlagModel.position.set(0, 1.2, -1)
+    transFlagModel.position.set(2, 1.2, -1)
     transFlagModel.scale.set(.7, .7, .7)
 
     // desk
     let deskModel = loadedObjsArray[11].scene.children[0]
     scene.add(deskModel)
-    deskModel.position.set(2, 0, -.7)
+    deskModel.position.set(4, 0, -.7)
     deskModel.scale.set(0.7, 0.7, 0.7)
 
     // computer
     let computerModel = loadedObjsArray[12].scene.children[0]
     scene.add(computerModel)
-    computerModel.position.set(1.7, 0.56, -.7)
+    computerModel.position.set(4, 0.56, -.7)
     computerModel.scale.set(0.7, 0.7, 0.7)
 
     // lamp
     let lampModel = loadedObjsArray[13].scene.children[0]
     scene.add(lampModel)
-    lampModel.position.set(4.5, 0, -.6)
+    lampModel.position.set(-0.7, 0, -0.5)
+    lampModel.rotation.set(0, Math.PI / 4, 0)
     lampModel.scale.set(0.7, 0.7, 0.7)
 
     // door
     let doorModel = loadedObjsArray[14].scene.children[0]
     let doorModelTwo = SkeletonUtils.clone(loadedObjsArray[14].scene.children[0])
     scene.add(doorModel, doorModelTwo)
-    doorModel.position.set(4, 0, -1)
+    doorModel.position.set(0, 0, -1)
     doorModel.scale.set(0.7, 0.7, 0.7)
-    doorModelTwo.position.set(-1, 0, 1)
-    doorModelTwo.rotation.set(0, Math.PI / 2, 0)
+    doorModelTwo.position.set(5, 0, 0.5)
+    doorModelTwo.rotation.set(0, -Math.PI / 2, 0)
     doorModelTwo.scale.set(0.7, 0.7, 0.7)
 
     // poster
     let posterModel = loadedObjsArray[15].scene.children[0]
     scene.add(posterModel)
-    posterModel.position.set(4.95, 0.9, 0.8)
+    posterModel.position.set(-1, 0.8, 0.4)
     posterModel.scale.set(0.8, 0.8, 0.8)
-    posterModel.rotation.set(0, - Math.PI / 2, 0)
+    posterModel.rotation.set(0, Math.PI / 2, 0)
 
     //mixers
     let mixer = new THREE.AnimationMixer(currentModel)
@@ -305,7 +306,6 @@ async function addAndRun(loadedObjsArray) {
                 // instagramModel.position.set(1, 1, 0)
                 // instagramModel.rotation.set(Math.PI / 2, 0, 0)
                 instagramModel.scale.set(0.038, 0.093, 0.038)
-
             }
             else {
                 rotatingModel()
@@ -331,7 +331,6 @@ async function addAndRun(loadedObjsArray) {
             }
             else {
                 currentModel.rotation.z += 0.01
-
             }
             // flag
             if (intersectsFlag[0]) {
@@ -354,8 +353,6 @@ async function addAndRun(loadedObjsArray) {
             else {
                 posterModel.scale.set(0.8, 0.8, 0.8)
             }
-
-
         }
 
         function rotatingModel() {
@@ -396,7 +393,6 @@ async function addAndRun(loadedObjsArray) {
                 // console.log('google forms clicked')
                 window.open('https://www.gendergp.com/wp-content/uploads/HRT-Timeline-Infographic-Female-to-Male-Testosterone-1920x1600.webp');
             }
-
 
             if (intersects[0] !== undefined) {
                 currentIntersectedObj = intersects[0]
@@ -542,64 +538,62 @@ async function addAndRun(loadedObjsArray) {
     spotLight.position.set(0, 2, 1)
     scene.add(spotLight)
     spotLight.target = phantomMesh
-    const spotLightHelper = new THREE.SpotLightHelper(spotLight);
-    scene.add(spotLightHelper);
+    // const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+    // scene.add(spotLightHelper);
 
     const spotLight2 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.15, 0.25, 1);
     spotLight2.position.set(2, 2, 1)
     scene.add(spotLight2)
     spotLight2.target = currentStormModel
-    const spotLightHelper2 = new THREE.SpotLightHelper(spotLight2);
-    scene.add(spotLightHelper2);
+    // const spotLightHelper2 = new THREE.SpotLightHelper(spotLight2);
+    // scene.add(spotLightHelper2);
 
     const spotLight3 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.15, 0.25, 1);
     spotLight3.position.set(4, 2, 1)
     scene.add(spotLight3)
     spotLight3.target = dudeNouneModel
-    const spotLightHelper3 = new THREE.SpotLightHelper(spotLight3);
-    scene.add(spotLightHelper3);
+    // const spotLightHelper3 = new THREE.SpotLightHelper(spotLight3);
+    // scene.add(spotLightHelper3);
 
     const spotLight4 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.06, 0.25, 1);
     spotLight4.position.set(1, 2, 2)
     scene.add(spotLight4)
     spotLight4.target = instagramModel
-    const spotLightHelper4 = new THREE.SpotLightHelper(spotLight4);
-    scene.add(spotLightHelper4);
+    // const spotLightHelper4 = new THREE.SpotLightHelper(spotLight4);
+    // scene.add(spotLightHelper4);
 
     const spotLight5 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.09, 0.25, 1);
     spotLight5.position.set(3, 2, 2)
     scene.add(spotLight5)
     spotLight5.target = googleFormsModel
-    const spotLightHelper5 = new THREE.SpotLightHelper(spotLight5);
-    scene.add(spotLightHelper5);
+    // const spotLightHelper5 = new THREE.SpotLightHelper(spotLight5);
+    // scene.add(spotLightHelper5);
 
     const spotLight6 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.09, 0.25, 1);
-    spotLight6.position.set(0, 2, 0)
+    spotLight6.position.set(2, 2, 1)
     scene.add(spotLight6)
     spotLight6.target = transFlagModel
-    const spotLightHelper6 = new THREE.SpotLightHelper(spotLight6);
-    scene.add(spotLightHelper6);
+    // const spotLightHelper6 = new THREE.SpotLightHelper(spotLight6);
+    // scene.add(spotLightHelper6);
 
     const spotLight7 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.09, 0.25, 1);
-    spotLight7.position.set(4.5, 2, 0)
+    spotLight7.position.set(-.7, 2, -.2)
     scene.add(spotLight7)
     spotLight7.target = lampModel
-    const spotLightHelper7 = new THREE.SpotLightHelper(spotLight7);
-    scene.add(spotLightHelper7);
+    // const spotLightHelper7 = new THREE.SpotLightHelper(spotLight7);
+    // scene.add(spotLightHelper7);
 
     const spotLight8 = new THREE.SpotLight(0xffffff, 4, 3, Math.PI * 0.09, 0.25, 1);
-    spotLight8.position.set(4.5, 2, 2)
+    spotLight8.position.set(0.2, 2.1, 1)
     scene.add(spotLight8)
     spotLight8.target = posterModel
-    const spotLightHelper8 = new THREE.SpotLightHelper(spotLight8);
-    scene.add(spotLightHelper8);
+    // const spotLightHelper8 = new THREE.SpotLightHelper(spotLight8);
+    // scene.add(spotLightHelper8);
 
     const HemisphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
     scene.add(HemisphereLight);
     const HemisphereLightHelper = new THREE.HemisphereLightHelper(HemisphereLight, 5);
-    scene.add(HemisphereLightHelper);
-
-
+    // scene.add(HemisphereLightHelper);
 }
 
 const mouse = new THREE.Vector2();
