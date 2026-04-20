@@ -162,7 +162,7 @@ async function addAndRun(loadedObjsArray) {
     phantomMesh.position.set(0, 0.55, 0)
     phantomMesh.scale.set(0.25, 1.2, 0.22)
     phantomMesh.material.transparent = true //enables opacity
-    phantomMesh.material.opacity = .3
+    phantomMesh.material.opacity = 0
     // console.log(currentModel)
     // dude noune
     let dudeNouneModel = loadedObjsArray[7].scene.children[0]
