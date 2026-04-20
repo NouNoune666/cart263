@@ -6,7 +6,7 @@ import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
 import { Avatar } from './Avatar.js';
 
 let audio = new Audio('audio/cas_music_sims.wav')
-audio.play();
+let soundStarted = false;
 // console.log(audio)
 
 const scene = new THREE.Scene()
@@ -351,6 +351,10 @@ async function addAndRun(loadedObjsArray) {
 
         // clicking events
         if (mouseWasClicked) {
+            if (soundStarted === false) {
+                audio.play();
+                soundStarted = true
+            }
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObject(nounoune1.currentModel)
             const intersectsInstagram = raycaster.intersectObject(instagramModel)
